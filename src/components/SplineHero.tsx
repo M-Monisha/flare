@@ -1,6 +1,7 @@
 'use client'
 
 import { useNavigate } from 'react-router-dom'
+import { SplineScene } from "@/components/ui/splite"
 import { Spotlight } from "@/components/ui/spotlight"
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'

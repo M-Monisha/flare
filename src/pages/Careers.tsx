@@ -81,7 +81,7 @@ const PageSpotlight: React.FC<{ containerRef: React.RefObject<HTMLDivElement | n
 
 /* ─── MAIN COMPONENT ────────────────────────────────────────────── */
 const Careers: React.FC = () => {
-  const [activeFilter, setActiveFilter] = useState<RoleCategory>('All');
+  const [_activeFilter, setActiveFilter] = useState<RoleCategory>('All');
   const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
