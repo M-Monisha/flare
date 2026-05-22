@@ -131,7 +131,7 @@ export default function About({ openModal }: AboutProps) {
                 </div>
 
                 <style>{`
-                    .org-chart { display: flex; flex-direction: column; align-items: center; gap: 0; }
+                    .org-chart { display: flex; flex-direction: column; align-items: center; gap: 0; overflow-x: auto; width: 100%; }
                     .org-node { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
                     .org-circle {
                         width: 80px; height: 80px; border-radius: 50%;
@@ -164,10 +164,12 @@ export default function About({ openModal }: AboutProps) {
                     .org-branches-row { display: flex; align-items: flex-start; justify-content: center; gap: 0; }
                     .org-branch-col { display: flex; flex-direction: column; align-items: center; }
                     .org-leaves-row { display: flex; align-items: flex-start; justify-content: center; gap: 1.5rem; margin-top: 0; }
-                    @media (max-width: 640px) {
-                        .org-circle.branch { width: 44px; height: 44px; }
-                        .org-circle.leaf { width: 38px; height: 38px; }
-                        .org-label { font-size: 0.65rem; }
+                    .org-scroll-wrapper { overflow-x: auto; width: 100%; padding-bottom: 1rem; -webkit-overflow-scrolling: touch; }
+                    @media (max-width: 768px) {
+                        .org-circle.ceo { width: 72px; height: 72px; }
+                        .org-circle.branch { width: 56px; height: 56px; }
+                        .org-circle.leaf { width: 44px; height: 44px; }
+                        .org-label { font-size: 0.7rem; }
                     }
                 `}</style>
 
@@ -185,8 +187,9 @@ export default function About({ openModal }: AboutProps) {
                     {/* Vertical line down from CEO */}
                     <div className="org-connector-v" />
 
-                    {/* Horizontal line spanning all 4 branches */}
-                    <div style={{ display: 'flex', alignItems: 'flex-start', width: '100%', maxWidth: '860px', justifyContent: 'center' }}>
+                    {/* Horizontally scrollable branches wrapper */}
+                    <div className="org-scroll-wrapper">
+                    <div style={{ display: 'flex', alignItems: 'flex-start', minWidth: '700px', justifyContent: 'center' }}>
                         {[
                             {
                                 label: 'Automation', color: '#00D4FF',
@@ -241,6 +244,7 @@ export default function About({ openModal }: AboutProps) {
                                 </div>
                             </div>
                         ))}
+                    </div>
                     </div>
                 </div>
             </section>
