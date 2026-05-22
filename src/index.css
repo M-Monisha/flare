@@ -1,0 +1,269 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 20 100% 60%; /* Vibrant Flare Orange */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 20 100% 60%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+}
+
+@layer base {
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer utilities {
+  @keyframes fade-in-down {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-down {
+    animation: fade-in-down 0.8s ease-out forwards;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.8s ease-out forwards;
+    opacity: 0;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+  .animation-delay-400 {
+    animation-delay: 0.4s;
+  }
+  .animation-delay-600 {
+    animation-delay: 0.6s;
+  }
+  .animation-delay-800 {
+    animation-delay: 0.8s;
+  }
+
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient-shift 3s ease infinite;
+  }
+
+  .hero-overlay {
+    background: linear-gradient(180deg, rgba(6, 11, 23, 0.75), rgba(6, 11, 23, 0.98));
+  }
+
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .flare-glow-border {
+    border: 1px solid hsla(var(--primary), 0.4);
+    box-shadow: 0 0 20px hsla(var(--primary), 0.15);
+  }
+
+  .flare-gradient-text {
+    background: linear-gradient(90deg, #ff3b3b, #ff9f1c, #ffd60a);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+  }
+
+  .flare-button {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(20 100% 50%));
+    color: white;
+    font-weight: 700;
+    border-radius: 999px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    border: none;
+    padding: 0.95rem 2.2rem;
+    min-height: 52px;
+    letter-spacing: 0.02em;
+    box-shadow: 0 12px 35px hsla(var(--primary), 0.22);
+  }
+
+  .flare-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 45px hsla(var(--primary), 0.26);
+  }
+}
+
+/* Responsive Utilities */
+@media (max-width: 767px) {
+    .glass-panel {
+        padding: 1.25rem;
+    }
+
+    .flare-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .text-4xl {
+        font-size: 2rem !important;
+        line-height: 1.2 !important;
+    }
+
+    .text-5xl, .text-6xl {
+        font-size: 2.25rem !important;
+        line-height: 1.1 !important;
+    }
+
+    /* Ensure pages don't get hidden under the fixed navbar */
+    .pt-24 {
+        padding-top: 5rem !important;
+    }
+}
+
+/* --- Refined Navbar Styling --- */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4rem;
+    background: rgba(6, 11, 23, 0.5);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.header.scrolled {
+    height: 80px;
+    background: rgba(6, 11, 23, 0.9);
+}
+
+.header.hide-nav {
+    transform: translateY(-100%);
+}
+
+.nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 1.5rem;
+    transition: all 0.3s ease;
+    opacity: 0.8;
+}
+
+.nav a:hover {
+    opacity: 1;
+    color: #ffffff;
+    filter: drop-shadow(0 0 8px rgba(255, 159, 28, 0.4));
+}
+
+.btn-header-primary {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-left: 1.5rem;
+    transition: all 0.3s ease;
+    opacity: 1;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.6rem 1.4rem;
+    border-radius: 99px;
+}
+
+.btn-header-primary:hover {
+    background: white;
+    color: black;
+    border-color: white;
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
+}
+
+@media (max-width: 1024px) {
+    .header {
+        padding: 0 1.5rem;
+    }
+}
