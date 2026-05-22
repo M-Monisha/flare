@@ -121,7 +121,7 @@ export default function About({ openModal }: AboutProps) {
             </section>
 
             {/* 5. TEAM ORG CHART */}
-            <section style={{ padding: '2.5rem 0' }} className="container">
+            <section style={{ padding: '2.5rem 0', overflowX: 'hidden' }} className="container">
                 <div className="text-center scroll-anim slide-up" style={{ marginBottom: '2rem' }}>
                     <h2 className="section-badge" style={{ backgroundColor: 'transparent', border: 'none', padding: 0 }}>Our Team</h2>
                     <h3 style={{ fontSize: 'clamp(1.25rem, 3vw, 1.75rem)', fontWeight: 800, color: '#fff', margin: '0.4rem 0 0.5rem' }}>The People Behind Flare</h3>
@@ -164,12 +164,14 @@ export default function About({ openModal }: AboutProps) {
                     .org-branches-row { display: flex; align-items: flex-start; justify-content: center; gap: 0; }
                     .org-branch-col { display: flex; flex-direction: column; align-items: center; }
                     .org-leaves-row { display: flex; align-items: flex-start; justify-content: center; gap: 1.5rem; margin-top: 0; }
-                    .org-scroll-wrapper { overflow-x: auto; width: 100%; padding-bottom: 1rem; -webkit-overflow-scrolling: touch; }
+                    .org-scroll-wrapper { overflow-x: auto; width: 100%; padding-bottom: 1.5rem; -webkit-overflow-scrolling: touch; display: flex; justify-content: center; }
                     @media (max-width: 768px) {
+                        .org-scroll-wrapper { justify-content: flex-start; }
                         .org-circle.ceo { width: 72px; height: 72px; }
                         .org-circle.branch { width: 56px; height: 56px; }
                         .org-circle.leaf { width: 44px; height: 44px; }
                         .org-label { font-size: 0.7rem; }
+                        .org-sub { font-size: 0.65rem; }
                     }
                 `}</style>
 
