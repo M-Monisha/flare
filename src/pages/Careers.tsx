@@ -2,24 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 
 /* ─── DATA ─────────────────────────────────────────────────────── */
 
-const howWeWork = [
-  {
-    icon: (<svg width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='#FF8C00' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><circle cx='12' cy='12' r='10'/><path d='M8 12l2 2 4-4'/></svg>),
-    title: 'No Bureaucracy',
-    desc: 'Good ideas win here, not job titles. If you have a better way to do something, say it and we will listen and act on it.',
-  },
-  {
-    icon: (<svg width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='#FF8C00' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><path d='M13 2L3 14h9l-1 8 10-12h-9l1-8z'/></svg>),
-    title: 'Ship Fast, Learn Faster',
-    desc: 'We move with urgency and purpose. We ship, measure, learn, and iterate. Quality and speed are not opposites here.',
-  },
-  {
-    icon: (<svg width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='#FF8C00' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><path d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'/></svg>),
-    title: 'You Own Your Work',
-    desc: 'From day one you have full ownership of your projects. No hand-holding, no micromanagement. Just trust and accountability.',
-  },
-];
-
 const values = [
   { title: 'Client Obsession', desc: 'Every decision we make starts with one question: does this make our client more successful? We go beyond deliverables.' },
   { title: 'Builder Mentality', desc: 'We are not order-takers. We think, design, build, and improve. If something can be better, we make it better.' },
@@ -55,7 +37,6 @@ const roles: Role[] = [
   { name: 'Digital Marketing Executive', type: 'Full-time', category: 'Marketing & Growth' },
 ];
 
-const filterTabs: RoleCategory[] = ['All', 'Engineering', 'Design', 'Marketing & Growth', 'Business', 'Internships'];
 /* ─── SPOTLIGHT ─────────────────────────────────────────────────── */
 const PageSpotlight: React.FC<{ containerRef: React.RefObject<HTMLDivElement | null>; cardClass: string }> = ({ containerRef, cardClass }) => {
   useEffect(() => {
@@ -118,8 +99,6 @@ const Careers: React.FC = () => {
     pageRef.current?.querySelectorAll('.scroll-anim').forEach(el => observer.observe(el));
     return () => observer.disconnect();
   }, []);
-
-  const filteredRoles = activeFilter === 'All' ? roles : roles.filter(r => r.category === activeFilter);
 
   const handleApply = (roleName: string) => {
     window.location.href = `mailto:consult@flaretechnologies.in?subject=Application - ${encodeURIComponent(roleName)}`;
