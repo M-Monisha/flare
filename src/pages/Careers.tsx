@@ -23,18 +23,92 @@ const perks = [
   { icon: (<svg width='26' height='26' viewBox='0 0 24 24' fill='none' stroke='#00D4FF' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 0 0-3-3.87'/><path d='M16 3.13a4 4 0 0 1 0 7.75'/></svg>), title: 'Flat Hierarchy', desc: 'You can walk up to anyone, including the founders, with an idea or a concern. No gatekeepers, no politics.' },
 ];
 
-type RoleCategory = 'All' | 'Engineering' | 'Design' | 'Marketing & Growth' | 'Business' | 'Internships';
-
-interface Role {
-  name: string;
-  type: 'Full-time' | 'Internship';
-  category: Exclude<RoleCategory, 'All'>;
+interface JobRole {
+  title: string;
+  type: string;
+  color: string;
+  about: string;
+  responsibilities: string[];
+  looking: string[];
 }
 
-const roles: Role[] = [
-  { name: 'Full Stack Developer', type: 'Full-time', category: 'Engineering' },
-  { name: 'UI/UX Designer', type: 'Full-time', category: 'Design' },
-  { name: 'Digital Marketing Executive', type: 'Full-time', category: 'Marketing & Growth' },
+const jobRoles: JobRole[] = [
+  {
+    title: 'Web Developer Intern',
+    type: 'Internship · Remote · 3–6 Months',
+    color: '#00D4FF',
+    about: 'Build real products for real clients. We\'re looking for someone who understands the web and knows how to use AI tools to ship faster without losing quality.',
+    responsibilities: [
+      'Build responsive websites and web apps for live client projects',
+      'Translate designs into functional, clean code',
+      'Use AI coding tools (Copilot, Cursor, v0) to work smarter',
+      'Participate in reviews, iterations, and client delivery',
+      'Work with Git for version control and collaborative development',
+      'Read and build from Figma designs with precision',
+    ],
+    looking: [
+      'Detail-oriented, ownership-driven mindset',
+      'Comfortable using AI tools in your development workflow',
+      'Someone who learns fast and takes initiative',
+      'Eye for detail — you notice when something looks or feels off',
+    ],
+  },
+  {
+    title: 'AI Developer Intern',
+    type: 'Internship · Remote · 3–6 Months',
+    color: '#A855F7',
+    about: 'We build AI into everything — automations, chatbots, intelligent workflows. We need someone who can take a real business problem and actually build an AI solution for it. Fast.',
+    responsibilities: [
+      'Build AI-powered features using LLM APIs (OpenAI, Anthropic, Gemini)',
+      'Create automations and workflows using n8n, Make, or LangChain',
+      'Design and implement prompt-driven features for client products',
+      'Integrate third-party APIs to connect AI features with real product workflows',
+      'Work with vector databases (Pinecone, ChromaDB) for knowledge-based apps',
+      'Explore and recommend the right AI tools for the right problems',
+    ],
+    looking: [
+      'Hands-on experience with at least one LLM API',
+      'Good understanding of prompt engineering',
+      'Experimental mindset — you try, break, and figure out fast',
+      'Ability to evaluate AI tools quickly and decide what to build vs. use off the shelf',
+    ],
+  },
+  {
+    title: 'Graphic Designer Intern',
+    type: 'Internship · Remote · 3–6 Months',
+    color: '#F59E0B',
+    about: 'Design here is not decoration — it\'s communication. We need a designer who thinks strategically, executes beautifully, and uses AI tools to move at the speed the market demands.',
+    responsibilities: [
+      'Design social creatives, brand assets, and marketing materials for real clients',
+      'Create UI mockups and visual concepts for web and app projects',
+      'Use AI tools (Firefly, Midjourney, Canva AI) to accelerate ideation',
+      'Collaborate with dev and marketing teams to ensure visual consistency',
+    ],
+    looking: [
+      'Strong design fundamentals — typography, colour, layout, hierarchy',
+      'Figma proficiency — non-negotiable',
+      'Portfolio showing range across branding, social, and digital',
+      'Comfortable giving and receiving direct design feedback',
+    ],
+  },
+  {
+    title: 'Social Media Intern',
+    type: 'Internship · Remote · 3–6 Months',
+    color: '#10B981',
+    about: 'We\'re not looking for someone who just posts — we\'re looking for someone who thinks strategically about content. You understand platforms, algorithms, and how to use AI tools to create better content faster.',
+    responsibilities: [
+      'Plan and execute content calendars across Instagram, LinkedIn, and X',
+      'Write captions, hooks, and CTAs that actually perform',
+      'Use AI tools (ChatGPT, Canva AI, CapCut) to speed up creation',
+      'Track metrics and refine strategy based on performance',
+    ],
+    looking: [
+      'Strong writing and storytelling instincts',
+      'Platform-native thinking — you know what works and why',
+      'Comfortable using AI tools for ideation and content production',
+      'Data-aware — you look at numbers and ask why',
+    ],
+  },
 ];
 
 /* ─── SPOTLIGHT ─────────────────────────────────────────────────── */
@@ -79,9 +153,54 @@ const PageSpotlight: React.FC<{ containerRef: React.RefObject<HTMLDivElement | n
   return null;
 };
 
+/* ─── JOB CARD COMPONENT ────────────────────────────────────────── */
+const JobCard: React.FC<{ job: JobRole; onApply: (title: string) => void }> = ({ job, onApply }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="jd-card" style={{ '--accent': job.color } as React.CSSProperties}
+      onMouseEnter={e => (e.currentTarget.style.borderColor = `${job.color}40`)}
+      onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)')}
+    >
+      {/* Top accent bar */}
+      <div style={{ height: '2px', background: job.color, opacity: 0.7 }} />
+
+      <div className="jd-card-header" onClick={() => setOpen(!open)}>
+        <div>
+          <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1rem', fontWeight: 700, color: '#fff', margin: '0 0 0.25rem' }}>{job.title}</h3>
+          <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.03em' }}>{job.type}</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
+          <button className="btn-apply" onClick={e => { e.stopPropagation(); onApply(job.title); }}
+            style={{ borderColor: `${job.color}60`, color: job.color }}>
+            Apply Now
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+          </button>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+            style={{ transition: 'transform 0.25s ease', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }}>
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </div>
+
+      {open && (
+        <div className="jd-card-body">
+          <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.875rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.65, margin: '1rem 0 0' }}>{job.about}</p>
+          <p className="jd-section-label">What You'll Do</p>
+          <ul className="jd-list">
+            {job.responsibilities.map((r, i) => <li key={i}>{r}</li>)}
+          </ul>
+          <p className="jd-section-label">What We're Looking For</p>
+          <ul className="jd-list">
+            {job.looking.map((l, i) => <li key={i}>{l}</li>)}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+};
+
 /* ─── MAIN COMPONENT ────────────────────────────────────────────── */
 const Careers: React.FC = () => {
-  const [_activeFilter, setActiveFilter] = useState<RoleCategory>('All');
   const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -427,54 +546,39 @@ const Careers: React.FC = () => {
                 Open Roles
               </h2>
               <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.875rem', color: 'rgba(255,255,255,0.4)', margin: 0 }}>
-                All positions are remote-friendly. Click Apply Now to send us your details.
+                All positions are remote. Click Apply Now to send us your details.
               </p>
             </div>
           </div>
 
-          {/* Role rows */}
-          <div className="scroll-anim slide-up" style={{ maxWidth: '720px' }}>
-            {roles.map((role, i) => (
-              <div key={i} style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: '1rem',
-                padding: '1.1rem 1.25rem',
-                borderRadius: '12px',
-                marginBottom: '0.625rem',
-                background: 'rgba(255,255,255,0.02)',
-                border: '1px solid rgba(255,255,255,0.06)',
-                transition: 'border-color 0.2s, background 0.2s',
-              }}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,140,0,0.25)';
-                  (e.currentTarget as HTMLElement).style.background = 'rgba(255,140,0,0.04)';
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.06)';
-                  (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.02)';
-                }}
-              >
-                {/* Left: title + tags */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-                  <span style={{ fontFamily: 'var(--font-heading)', fontSize: '0.9375rem', fontWeight: 700, color: '#fff' }}>
-                    {role.name}
-                  </span>
-                  <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.75rem', color: 'rgba(255,255,255,0.35)', fontWeight: 500, letterSpacing: '0.03em' }}>
-                    {role.type} · Remote
-                  </span>
-                </div>
-                {/* Right: apply button */}
-                <button
-                  className="btn-apply"
-                  onClick={() => handleApply(role.name)}
-                  style={{ flexShrink: 0 }}
-                >
-                  Apply Now
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-                </button>
-              </div>
+          <style>{`
+            .jd-card {
+              position: relative;
+              background: #120F17;
+              border: 1px solid rgba(255,255,255,0.07);
+              border-radius: 16px;
+              overflow: hidden;
+              transition: border-color 0.25s ease, box-shadow 0.25s ease;
+            }
+            .jd-card:hover { box-shadow: 0 8px 32px -8px rgba(0,0,0,0.5); }
+            .jd-card-header {
+              display: flex; align-items: center; justify-content: space-between;
+              gap: 1rem; padding: 1.25rem 1.5rem;
+              cursor: pointer; flex-wrap: wrap;
+            }
+            .jd-card-body {
+              padding: 0 1.5rem 1.25rem;
+              border-top: 1px solid rgba(255,255,255,0.06);
+            }
+            .jd-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+            .jd-list li { display: flex; align-items: flex-start; gap: 0.5rem; font-family: var(--font-body); font-size: 0.85rem; color: rgba(255,255,255,0.6); line-height: 1.55; }
+            .jd-list li::before { content: '→'; color: var(--accent); flex-shrink: 0; font-weight: 700; margin-top: 1px; }
+            .jd-section-label { font-family: var(--font-body); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); margin: 1rem 0 0.5rem; }
+          `}</style>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 460px), 1fr))', gap: '1rem' }} className="scroll-anim slide-up">
+            {jobRoles.map((job, i) => (
+              <JobCard key={i} job={job} onApply={handleApply} />
             ))}
           </div>
         </div>
@@ -509,7 +613,6 @@ const Careers: React.FC = () => {
             <button
               className="btn btn-primary"
               onClick={() => {
-                setActiveFilter('Internships');
                 document.getElementById('open-roles')?.scrollIntoView({ behavior: 'smooth' });
               }}
               style={{ position: 'relative', zIndex: 1, flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: '0.4rem', whiteSpace: 'nowrap' }}
