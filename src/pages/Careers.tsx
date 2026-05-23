@@ -536,21 +536,32 @@ const Careers: React.FC = () => {
         </div>
       </section>
 
-      {/* ── SECTION 7: OPEN ROLES ───────────────────────────────────────── */}
-      <section id="open-roles" style={{ padding: '3rem 0' }}>
+      {/* ── SECTION 8: FRESH TALENT + INTERNSHIP ROLES ─────────────────── */}
+      <section id="open-roles" style={{ padding: '2.5rem 0', background: '#0a0f1e' }}>
         <div className="container">
-          <div className="section-header scroll-anim slide-up" style={{ marginBottom: '2rem' }}>
-            <span className="section-badge">Open Positions</span>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: '1.5rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
-              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em', margin: 0 }}>
-                Open Roles
+          {/* Banner */}
+          <div className="scroll-anim slide-up" style={{
+            position: 'relative',
+            background: '#120F17',
+            border: '1px solid rgba(255,140,0,0.2)',
+            borderRadius: '16px',
+            padding: '1.75rem 2rem',
+            overflow: 'hidden',
+            marginBottom: '1.5rem',
+          }}>
+            <div style={{ position: 'absolute', top: '50%', left: '30%', transform: 'translate(-50%, -50%)', width: '300px', height: '200px', background: 'radial-gradient(ellipse, rgba(255,140,0,0.08) 0%, transparent 70%)', pointerEvents: 'none', zIndex: 0 }} />
+            <div style={{ position: 'relative', zIndex: 1 }}>
+              <span className="section-badge" style={{ marginBottom: '0.5rem', display: 'inline-block' }}>Internships & Entry Level</span>
+              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em', margin: '0.25rem 0 0.5rem', lineHeight: 1.25 }}>
+                Just Starting Out? <span style={{ color: '#FF8C00' }}>You Are Welcome Here.</span>
               </h2>
-              <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.875rem', color: 'rgba(255,255,255,0.4)', margin: 0 }}>
-                All positions are remote. Click Apply Now to send us your details.
+              <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.875rem', color: 'rgba(255,255,255,0.55)', lineHeight: 1.65, margin: 0, maxWidth: '600px' }}>
+                No 5 years needed. We look for curiosity, drive, and willingness to learn — with real responsibilities and a shot at a full-time role.
               </p>
             </div>
           </div>
 
+          {/* JD Cards */}
           <style>{`
             .jd-card {
               position: relative;
@@ -580,46 +591,6 @@ const Careers: React.FC = () => {
             {jobRoles.map((job, i) => (
               <JobCard key={i} job={job} onApply={handleApply} />
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── SECTION 8: FRESH TALENT SPOTLIGHT ──────────────────────────── */}
-      <section style={{ padding: '2rem 0', background: '#0a0f1e' }}>
-        <div className="container">
-          <div className="scroll-anim slide-up" style={{
-            position: 'relative',
-            background: '#120F17',
-            border: '1px solid rgba(255,140,0,0.2)',
-            borderRadius: '16px',
-            padding: '1.75rem 2rem',
-            overflow: 'hidden',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '2rem',
-            flexWrap: 'wrap',
-          }}>
-            <div style={{ position: 'absolute', top: '50%', left: '30%', transform: 'translate(-50%, -50%)', width: '300px', height: '200px', background: 'radial-gradient(ellipse, rgba(255,140,0,0.08) 0%, transparent 70%)', pointerEvents: 'none', zIndex: 0 }} />
-            <div style={{ position: 'relative', zIndex: 1, flex: 1, minWidth: '240px' }}>
-              <span className="section-badge" style={{ marginBottom: '0.5rem', display: 'inline-block' }}>Internships & Entry Level</span>
-              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em', margin: '0.25rem 0 0.5rem', lineHeight: 1.25 }}>
-                Just Starting Out? <span style={{ color: '#FF8C00' }}>You Are Welcome Here.</span>
-              </h2>
-              <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.875rem', color: 'rgba(255,255,255,0.55)', lineHeight: 1.65, margin: 0, maxWidth: '480px' }}>
-                No 5 years needed. We look for curiosity, drive, and willingness to learn — with real responsibilities and a shot at a full-time role.
-              </p>
-            </div>
-            <button
-              className="btn btn-primary"
-              onClick={() => {
-                document.getElementById('open-roles')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              style={{ position: 'relative', zIndex: 1, flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: '0.4rem', whiteSpace: 'nowrap' }}
-            >
-              View Internship Roles
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-            </button>
           </div>
         </div>
       </section>
