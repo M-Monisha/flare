@@ -1,8 +1,11 @@
 'use client'
 
+import { Suspense, lazy } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
+
+const Spline = lazy(() => import('@splinetool/react-spline'));
 
 export function SplineHero() {
   const navigate = useNavigate();
@@ -17,7 +20,7 @@ export function SplineHero() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '7rem 1.5rem 4rem',
+      padding: 'clamp(5rem, 12vw, 7rem) 1.5rem clamp(3rem, 6vw, 4rem)',
     }}>
 
       {/* ── CSS Blob Background ── */}
@@ -44,7 +47,7 @@ export function SplineHero() {
         .hero-blob {
           position: absolute;
           border-radius: 50%;
-          filter: blur(80px);
+          filter: blur(60px);
           pointer-events: none;
           will-change: transform;
         }
@@ -128,53 +131,62 @@ export function SplineHero() {
         @media (max-width: 640px) {
           .hero-stats { gap: 1.25rem; }
           .hero-stat-num { font-size: 1.125rem; }
-          .hero-blob { filter: blur(60px); }
+          .hero-blob { filter: blur(45px); }
         }
       `}</style>
 
       {/* Blob 1 — orange, top-left */}
       <div className="hero-blob" style={{
-        width: '500px', height: '500px',
-        background: 'rgba(255,140,0,0.18)',
-        top: '-100px', left: '-150px',
+        width: '600px', height: '600px',
+        background: 'rgba(255,140,0,0.28)',
+        top: '-150px', left: '-180px',
         animation: 'blob1 12s ease-in-out infinite',
       }} />
 
       {/* Blob 2 — cyan, top-right */}
       <div className="hero-blob" style={{
-        width: '450px', height: '450px',
-        background: 'rgba(0,212,255,0.12)',
-        top: '-80px', right: '-120px',
+        width: '550px', height: '550px',
+        background: 'rgba(0,212,255,0.22)',
+        top: '-100px', right: '-150px',
         animation: 'blob2 15s ease-in-out infinite',
       }} />
 
       {/* Blob 3 — purple, bottom-left */}
       <div className="hero-blob" style={{
-        width: '400px', height: '400px',
-        background: 'rgba(168,85,247,0.12)',
-        bottom: '-80px', left: '10%',
+        width: '500px', height: '500px',
+        background: 'rgba(168,85,247,0.22)',
+        bottom: '-100px', left: '5%',
         animation: 'blob3 18s ease-in-out infinite',
       }} />
 
       {/* Blob 4 — deep blue, bottom-right */}
       <div className="hero-blob" style={{
-        width: '350px', height: '350px',
-        background: 'rgba(90,90,255,0.1)',
-        bottom: '-60px', right: '5%',
+        width: '450px', height: '450px',
+        background: 'rgba(90,90,255,0.18)',
+        bottom: '-80px', right: '0%',
         animation: 'blob4 14s ease-in-out infinite',
+      }} />
+
+      {/* Blob 5 — center glow */}
+      <div className="hero-blob" style={{
+        width: '700px', height: '400px',
+        background: 'rgba(255,60,0,0.1)',
+        top: '50%', left: '50%',
+        transform: 'translate(-50%, -50%)',
+        animation: 'blob1 20s ease-in-out infinite',
       }} />
 
       {/* Subtle grid overlay */}
       <div style={{
         position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 1,
-        backgroundImage: 'linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)',
+        backgroundImage: 'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
         backgroundSize: '60px 60px',
       }} />
 
       {/* Dark vignette overlay */}
       <div style={{
         position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 2,
-        background: 'radial-gradient(ellipse at center, transparent 40%, rgba(6,11,23,0.7) 100%)',
+        background: 'radial-gradient(ellipse at center, transparent 30%, rgba(6,11,23,0.55) 100%)',
       }} />
 
       {/* ── Content ── */}
@@ -187,18 +199,6 @@ export function SplineHero() {
         flexDirection: 'column',
         alignItems: 'center',
       }}>
-
-        {/* Tag */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="hero-tag">
-            <span className="hero-tag-dot" />
-            AI-Powered Digital Agency
-          </div>
-        </motion.div>
 
         {/* Headline */}
         <motion.h1
@@ -263,29 +263,28 @@ export function SplineHero() {
           </button>
         </motion.div>
 
-        {/* Stats */}
+        {/* Robot */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="hero-stats"
-          style={{ justifyContent: 'center' }}
+          style={{ width: '100%', maxWidth: '340px', height: '280px', marginTop: '1.5rem' }}
         >
-          <div className="hero-stat-item">
-            <span className="hero-stat-num">300%</span>
-            <span className="hero-stat-label">Avg Growth</span>
-          </div>
-          <div className="hero-divider" />
-          <div className="hero-stat-item">
-            <span className="hero-stat-num">100+</span>
-            <span className="hero-stat-label">Hours Saved Weekly</span>
-          </div>
-          <div className="hero-divider" />
-          <div className="hero-stat-item">
-            <span className="hero-stat-num">0</span>
-            <span className="hero-stat-label">Downtime Deployments</span>
-          </div>
+          <Suspense fallback={
+            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <svg className="animate-spin" style={{ width: '24px', height: '24px', color: '#FF8C00' }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l2-2.647z"/>
+              </svg>
+            </div>
+          }>
+            <Spline
+              scene="https://prod.spline.design/PyzDhpQ9E5f1E3MT/scene.splinecode"
+              style={{ width: '100%', height: '100%' }}
+            />
+          </Suspense>
         </motion.div>
+
       </div>
     </div>
   );
