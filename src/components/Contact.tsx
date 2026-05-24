@@ -66,16 +66,16 @@ const Contact: React.FC<ContactProps> = ({ onOpenModal }) => {
                     display: inline-flex;
                     align-items: center;
                     justify-content: center;
-                    border-radius: 16px;
-                    padding: 0.1em 0.3em;
+                    border-radius: 20px;
+                    padding: 0.3em 0.6em;
                     border: 2px solid rgba(255,255,255,0.1);
                     background: rgba(255,255,255,0.04);
                     backdrop-filter: blur(8px);
-                    min-width: 320px;
-                    height: 1.15em;
+                    min-width: 360px;
+                    min-height: 110px;
                 }
                 @media (max-width: 640px) {
-                    .slot-machine-box { min-width: 200px; }
+                    .slot-machine-box { min-width: 240px; min-height: 80px; }
                 }
             `}</style>
             <div className="container scroll-anim scale-up">

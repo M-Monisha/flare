@@ -67,10 +67,10 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
           alignItems: 'center',
           overflow: 'hidden',
           borderRadius: '12px',
-          background: 'linear-gradient(135deg, rgba(255,140,0,0.18), rgba(0,212,255,0.12))',
-          border: '1px solid rgba(255,140,0,0.35)',
-          padding: '0.1em 0.4em',
-          boxShadow: '0 0 32px rgba(255,140,0,0.2), inset 0 0 20px rgba(0,212,255,0.05)',
+          background: 'linear-gradient(135deg, rgba(255,140,0,0.25), rgba(0,212,255,0.18))',
+          border: '2px solid rgba(255,140,0,0.6)',
+          padding: '0.05em 0.35em',
+          boxShadow: '0 0 40px rgba(255,140,0,0.3), inset 0 0 20px rgba(0,212,255,0.08)',
         }}>
           <RotatingText
             texts={['Different.', 'Complete.']}
@@ -93,9 +93,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
               fontWeight: 900,
               letterSpacing: '-0.04em',
               lineHeight: 1,
-              background: 'linear-gradient(90deg, #FF8C00, #00D4FF)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
+              color: '#FF8C00',
             }}
           />
         </span>
