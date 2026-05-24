@@ -12,8 +12,8 @@ const values = [
 ];
 
 const testimonials = [
-  { quote: 'Joining Flare was the best career decision I made. I shipped real features in my first week and got feedback that actually helped me grow.', role: 'Frontend Developer' },
-  { quote: 'The culture here is unlike any agency I have worked at. Everyone genuinely cares about the work and about each other.', role: 'Full Stack Developer' },
+  { quote: 'Design at Flare is not just about making things look good. It is about making them work. I finally understood what designing for real users actually means.', role: 'UI/UX Design Intern' },
+  { quote: 'I joined to learn digital marketing. I ended up understanding tech, automation, and how businesses actually grow. That kind of exposure you don\'t get anywhere else.', role: 'Marketing Intern' },
 ];
 
 const perks = [
@@ -161,8 +161,7 @@ const JobCard: React.FC<{ job: JobRole; onApply: (title: string) => void }> = ({
       onMouseEnter={e => (e.currentTarget.style.borderColor = `${job.color}40`)}
       onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)')}
     >
-      {/* Top accent bar */}
-      <div style={{ height: '2px', background: job.color, opacity: 0.7 }} />
+      {/* Top accent bar removed */}
 
       <div className="jd-card-header" onClick={() => setOpen(!open)}>
         <div>
