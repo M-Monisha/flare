@@ -63,16 +63,30 @@ export function SplineHero() {
         }
         .hero-blob { position:absolute; border-radius:50%; filter:blur(70px); pointer-events:none; will-change:transform; }
         .hero-btn {
+          position: relative;
           display: inline-flex; align-items: center; gap: 0.625rem;
-          padding: 0.875rem 2rem;
-          background: #FF8C00; color: #000;
-          font-weight: 800; font-size: 0.9375rem;
-          border-radius: 14px; border: none; cursor: pointer;
-          transition: transform 0.2s ease, box-shadow 0.2s ease;
-          box-shadow: 0 0 32px rgba(255,140,0,0.35);
+          padding: 0.75rem 1.75rem;
+          background: #111827; color: #fff;
+          font-weight: 700; font-size: 0.9375rem;
+          border-radius: 12px; border: none; cursor: pointer;
+          transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
           letter-spacing: 0.02em;
+          z-index: 0;
+          overflow: visible;
         }
-        .hero-btn:hover { transform: translateY(-2px); box-shadow: 0 0 48px rgba(255,140,0,0.5); }
+        .hero-btn::before {
+          content: '';
+          position: absolute;
+          inset: -2px;
+          border-radius: 14px;
+          background: linear-gradient(135deg, #6366f1, #ec4899, #facc15);
+          opacity: 0.65;
+          filter: blur(10px);
+          z-index: -1;
+          transition: opacity 0.2s ease, filter 0.2s ease;
+        }
+        .hero-btn:hover::before { opacity: 1; filter: blur(14px); }
+        .hero-btn:hover { background: #1f2937; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
         .hero-btn:active { transform: translateY(0); }
         @keyframes gradientShift {
           0% { background-position: 0% 50%; }
