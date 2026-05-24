@@ -53,7 +53,7 @@ const services: { label: string; description: string; color: string; icon: React
     },
 ];
 
-const Services: React.FC<ServicesProps> = ({ openModal }) => {
+const Services: React.FC<ServicesProps> = ({ openModal: _openModal }) => {
     return (
         <section className="relative overflow-hidden" style={{ background: 'var(--bg-base)', paddingTop: '7rem', paddingBottom: '5rem' }}>
             {/* Ambient glow */}
@@ -213,19 +213,6 @@ const Services: React.FC<ServicesProps> = ({ openModal }) => {
                         </Link>
                         );
                     })}
-                </div>
-
-                {/* ── Action Buttons ── */}
-                <div className="flex flex-col items-center gap-4 pt-10 w-full max-w-3xl mx-auto" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-                    <div className="flex flex-col sm:flex-row gap-3 items-center justify-center">
-                        <button onClick={openModal} className="btn btn-primary cursor-pointer">Book Consultation</button>
-                    </div>
-                    <Link to="/services/all"
-                        className="group flex items-center gap-2 transition-colors duration-200"
-                        style={{ fontFamily: 'var(--font-body)', fontSize: '0.9375rem', fontWeight: 600, color: 'var(--text-secondary)', textDecoration: 'none', marginTop: '0.5rem' }}>
-                        Explore All Services
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" style={{ color: 'var(--flare-orange)' }} />
-                    </Link>
                 </div>
 
             </div>
