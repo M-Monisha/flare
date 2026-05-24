@@ -22,6 +22,7 @@ import Results from "@/pages/Results";
 import About from "@/pages/About";
 import Contact from "@/pages/Contact";
 import Careers from "@/pages/Careers";
+import MainServiceDetail from "@/pages/MainServiceDetail";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -51,6 +52,7 @@ function App() {
             <Route path="/methodology" element={<Methodology openModal={openModal} />} />
             <Route path="/results" element={<Results openModal={openModal} />} />
             <Route path="/careers" element={<Careers />} />
+            <Route path="/main-services/:slug" element={<MainServiceDetail openModal={openModal} />} />
             <Route path="/about" element={<About openModal={openModal} />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>

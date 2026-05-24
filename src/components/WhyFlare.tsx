@@ -3,23 +3,23 @@ import React, { useEffect, useRef } from 'react';
 const features = [
     {
         title: 'Agile Delivery Model',
-        icon: 'uisoczqi',
         desc: 'You never have to wait six months to see progress. We move fast, keep you informed, and deliver working solutions in a matter of weeks.',
+        img: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=70&auto=format&fit=crop',
     },
     {
         title: 'Senior-Led Execution',
-        icon: 'weqkkuwt',
         desc: 'Your project is handled entirely by experienced professionals. The same engineers who plan your system are the ones who build it.',
+        img: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=70&auto=format&fit=crop',
     },
     {
         title: 'Security-First Architecture',
-        icon: 'jectmwqf',
         desc: 'Your data is safe and your systems remain stable. We build things properly the first time so you never pay to fix avoidable problems later.',
+        img: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600&q=70&auto=format&fit=crop',
     },
     {
         title: 'Automated Systems',
-        icon: 'euaablbm',
         desc: 'Imagine a team member who works constantly, never forgets a task, and handles your repetitive work automatically.',
+        img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=70&auto=format&fit=crop',
     },
 ];
 
@@ -59,18 +59,20 @@ const WhyFlare: React.FC = () => {
                             key={`${feature.title}-${index}`}
                             className="why-feature-card"
                         >
-                            <div className="card-accent" />
-                            <div className="mb-4">
-                                {/* @ts-ignore */}
-                                <lord-icon
-                                    src={`https://cdn.lordicon.com/${feature.icon}.json`}
-                                    trigger="hover"
-                                    colors="primary:#00D4FF,secondary:#30c9e8"
-                                    style={{ width: '60px', height: '60px' }}
-                                ></lord-icon>
+                            {/* Background image */}
+                            <div style={{
+                                position: 'absolute', inset: 0, borderRadius: '16px', overflow: 'hidden', zIndex: 0,
+                            }}>
+                                <img
+                                    src={feature.img}
+                                    alt=""
+                                    loading="lazy"
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', opacity: 0.18 }}
+                                />
                             </div>
-                            <h4 className="card-title">{feature.title}</h4>
-                            <p className="card-desc">{feature.desc}</p>
+                            <div className="card-accent" />
+                            <h4 className="card-title" style={{ position: 'relative', zIndex: 1 }}>{feature.title}</h4>
+                            <p className="card-desc" style={{ position: 'relative', zIndex: 1 }}>{feature.desc}</p>
                         </div>
                     ))}
                 </div>

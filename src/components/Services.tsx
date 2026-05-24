@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { mainServicesData } from '@/data/mainServicesData';
 
 interface ServicesProps {
     openModal: () => void;
@@ -143,6 +144,9 @@ const Services: React.FC<ServicesProps> = ({ openModal }) => {
                         overflow: hidden;
                         transition: color 0.3s ease, max-height 0.35s ease;
                     }
+                    .svc-card:hover .svc-explore {
+                        opacity: 1 !important;
+                    }
                     .svc-card:hover .svc-card-desc {
                         color: rgba(255,255,255,0.6);
                         max-height: 100px;
@@ -165,11 +169,14 @@ const Services: React.FC<ServicesProps> = ({ openModal }) => {
                 `}</style>
 
                 <div className="svc-grid">
-                    {services.map((svc, i) => (
-                        <div
+                    {services.map((svc, i) => {
+                        const detailSlug = mainServicesData[i]?.slug;
+                        return (
+                        <Link
                             key={i}
+                            to={detailSlug ? `/main-services/${detailSlug}` : '#'}
                             className="svc-card"
-                            style={{ '--svc-color': svc.color } as React.CSSProperties}
+                            style={{ '--svc-color': svc.color, textDecoration: 'none' } as React.CSSProperties}
                             onMouseEnter={e => {
                                 e.currentTarget.style.borderColor = `${svc.color}40`;
                             }}
@@ -180,15 +187,8 @@ const Services: React.FC<ServicesProps> = ({ openModal }) => {
                             <div className="svc-card-top-bar" style={{ background: svc.color }} />
                             <div className="svc-card-bg-glow" style={{ background: svc.color }} />
 
-                            {/* Lottie animation — replaces icon for cards that have it */}
                             {svc.lottie ? (
-                                <div style={{
-                                    width: '110px',
-                                    height: '110px',
-                                    pointerEvents: 'none',
-                                    zIndex: 3,
-                                    marginBottom: '0.25rem',
-                                }}>
+                                <div style={{ width: '110px', height: '110px', pointerEvents: 'none', zIndex: 3, marginBottom: '0.25rem' }}>
                                     <DotLottieReact src={svc.lottie} loop autoplay />
                                 </div>
                             ) : (
@@ -198,8 +198,21 @@ const Services: React.FC<ServicesProps> = ({ openModal }) => {
                             )}
                             <p className="svc-card-label">{svc.label}</p>
                             <p className="svc-card-desc">{svc.description}</p>
-                        </div>
-                    ))}
+
+                            {/* Explore link */}
+                            <div style={{
+                                display: 'flex', alignItems: 'center', gap: '0.35rem',
+                                fontSize: '0.8125rem', fontWeight: 600, color: svc.color,
+                                marginTop: 'auto', paddingTop: '0.5rem',
+                                opacity: 0, transition: 'opacity 0.25s ease',
+                            }}
+                                className="svc-explore"
+                            >
+                                Explore <ArrowRight style={{ width: '13px', height: '13px' }} />
+                            </div>
+                        </Link>
+                        );
+                    })}
                 </div>
 
                 {/* ── Action Buttons ── */}
