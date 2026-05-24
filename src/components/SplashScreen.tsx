@@ -2,23 +2,12 @@ import { useEffect, useState } from 'react';
 
 export default function SplashScreen({ onDone }: { onDone: () => void }) {
   const [splashVisible, setSplashVisible] = useState(true);
-  // 0 = showing "Different", 1 = fading out, 2 = showing "Complete"
-  const [wordState, setWordState] = useState<0 | 1 | 2>(0);
 
   useEffect(() => {
-    // Start fading out "Different" at 1.8s
-    const t1 = setTimeout(() => setWordState(1), 1800);
-    // Show "Complete" at 2.2s (after fade out)
-    const t2 = setTimeout(() => setWordState(2), 2200);
-    // Fade out whole splash at 3.8s
-    const t3 = setTimeout(() => setSplashVisible(false), 3800);
-    // Done at 4.5s
-    const t4 = setTimeout(() => onDone(), 4500);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
+    const t1 = setTimeout(() => setSplashVisible(false), 4200);
+    const t2 = setTimeout(() => onDone(), 4900);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [onDone]);
-
-  const word = wordState === 2 ? 'Complete' : 'Different';
-  const wordOpacity = wordState === 1 ? 0 : 1;
 
   return (
     <div style={{
@@ -38,12 +27,38 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
     }}>
 
       <style>{`
-        @keyframes fadeSlideUp {
+        @keyframes rowIn {
           from { opacity: 0; transform: translateY(20px); }
           to   { opacity: 1; transform: translateY(0); }
         }
+        @keyframes barIn {
+          from { opacity: 0; transform: scaleX(0); }
+          to   { opacity: 1; transform: scaleX(1); }
+        }
+        @keyframes subIn {
+          from { opacity: 0; }
+          to   { opacity: 1; }
+        }
+
+        /* "Different" fades in, holds, then fades out */
+        @keyframes wordDifferent {
+          0%   { opacity: 0; }
+          10%  { opacity: 1; }
+          50%  { opacity: 1; }
+          60%  { opacity: 0; }
+          100% { opacity: 0; }
+        }
+
+        /* "Complete" fades in after Different fades out */
+        @keyframes wordComplete {
+          0%   { opacity: 0; }
+          55%  { opacity: 0; }
+          70%  { opacity: 1; }
+          100% { opacity: 1; }
+        }
+
         .splash-row {
-          animation: fadeSlideUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.2s both;
+          animation: rowIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.15s both;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -51,12 +66,14 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
           flex-wrap: nowrap;
         }
         .splash-bar {
-          animation: fadeSlideUp 0.5s cubic-bezier(0.16,1,0.3,1) 0.5s both;
+          animation: barIn 0.6s cubic-bezier(0.16,1,0.3,1) 0.5s both;
+          transform-origin: left;
         }
         .splash-sub {
-          animation: fadeSlideUp 0.5s cubic-bezier(0.16,1,0.3,1) 0.65s both;
+          animation: subIn 0.6s ease 0.7s both;
         }
         .splash-word-box {
+          position: relative;
           display: inline-flex;
           align-items: center;
           justify-content: center;
@@ -67,8 +84,14 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
           padding: 0.1em 0.45em;
           min-width: clamp(190px, 40vw, 440px);
           height: clamp(58px, 12vw, 105px);
+          overflow: hidden;
         }
         .splash-word {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           font-family: var(--font-heading, sans-serif);
           font-size: clamp(2rem, 8vw, 5.5rem);
           font-weight: 900;
@@ -76,7 +99,12 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
           line-height: 1;
           color: #FF8C00;
           white-space: nowrap;
-          transition: opacity 0.35s ease;
+        }
+        .word-different {
+          animation: wordDifferent 4s ease 0.3s both;
+        }
+        .word-complete {
+          animation: wordComplete 4s ease 0.3s both;
         }
       `}</style>
 
@@ -95,14 +123,10 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
           Build
         </span>
 
-        {/* Word box — single element, just fades opacity */}
+        {/* Word box — pure CSS animation, no React state swap */}
         <div className="splash-word-box">
-          <span
-            className="splash-word"
-            style={{ opacity: wordOpacity }}
-          >
-            {word}
-          </span>
+          <span className="splash-word word-different">Different</span>
+          <span className="splash-word word-complete">Complete</span>
         </div>
       </div>
 
