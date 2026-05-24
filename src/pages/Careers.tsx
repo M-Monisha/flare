@@ -346,12 +346,12 @@ const Careers: React.FC = () => {
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div className="scroll-anim slide-up">
             <span className="section-badge">We Are Hiring</span>
-            <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2.5rem, 7vw, 4.5rem)', fontWeight: 800, color: '#fff', letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: '1.5rem', marginTop: '0.75rem' }}>
-              Do the Best Work<br />
-              <span style={{ color: '#FF8C00' }}>of Your Career.</span>
+            <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2rem, 6vw, 4rem)', fontWeight: 900, color: '#fff', letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: '1.25rem', marginTop: '0.75rem', maxWidth: '780px', margin: '0.75rem auto 1.25rem' }}>
+              India's First Technical Marketing Powerhouse{' '}
+              <span style={{ color: '#FF8C00' }}>is Being Built Here.</span>
             </h1>
-            <p style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(1rem, 2.5vw, 1.2rem)', color: 'rgba(255,255,255,0.65)', lineHeight: 1.7, maxWidth: '620px', margin: '0 auto 2.5rem' }}>
-              Flare is building a team of designers, developers, marketers, and problem-solvers who care deeply about the work they do. If you want to build things that matter, you belong here.
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(0.9rem, 2vw, 1.05rem)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.75, maxWidth: '580px', margin: '0 auto 2.5rem' }}>
+              We're assembling the sharpest minds in tech, design, and growth — people who don't just execute, they engineer outcomes. If you're done playing small, this is where you belong.
             </p>
             <button
               onClick={scrollToRoles}
