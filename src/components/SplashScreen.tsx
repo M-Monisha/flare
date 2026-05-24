@@ -1,14 +1,33 @@
 import { useEffect, useState } from 'react';
-import RotatingText from '@/components/ui/RotatingText';
 
 export default function SplashScreen({ onDone }: { onDone: () => void }) {
   const [phase, setPhase] = useState<'in' | 'hold' | 'out'>('in');
+  const [word, setWord] = useState<'different' | 'complete'>('different');
+  const [wordPhase, setWordPhase] = useState<'enter' | 'hold' | 'exit'>('enter');
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase('hold'), 600);
-    const t2 = setTimeout(() => setPhase('out'), 2400);
-    const t3 = setTimeout(() => onDone(), 3100);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+    // Fade in splash
+    const t1 = setTimeout(() => setPhase('hold'), 500);
+
+    // "Different." enters at 0.5s, holds until 2s, then exits
+    const t2 = setTimeout(() => setWordPhase('exit'), 2000);
+
+    // Switch to "Complete." after exit animation (300ms)
+    const t3 = setTimeout(() => {
+      setWord('complete');
+      setWordPhase('enter');
+    }, 2350);
+
+    // "Complete." holds, then start fading out whole splash at 4s
+    const t4 = setTimeout(() => setPhase('out'), 4000);
+
+    // Done — show website
+    const t5 = setTimeout(() => onDone(), 4700);
+
+    return () => {
+      clearTimeout(t1); clearTimeout(t2); clearTimeout(t3);
+      clearTimeout(t4); clearTimeout(t5);
+    };
   }, [onDone]);
 
   return (
@@ -23,33 +42,49 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
       justifyContent: 'center',
       gap: '1rem',
       opacity: phase === 'out' ? 0 : 1,
-      transition: phase === 'out' ? 'opacity 0.7s ease' : phase === 'in' ? 'opacity 0.6s ease' : 'none',
+      transition: phase === 'out' ? 'opacity 0.7s ease' : phase === 'in' ? 'opacity 0.5s ease' : 'none',
       pointerEvents: phase === 'out' ? 'none' : 'all',
     }}>
 
       <style>{`
-        @keyframes slideUp {
-          from { opacity: 0; transform: translateY(32px); }
+        @keyframes slideInUp {
+          from { opacity: 0; transform: translateY(40px); }
           to   { opacity: 1; transform: translateY(0); }
         }
-        @keyframes slideUp2 {
-          from { opacity: 0; transform: translateY(20px); }
+        @keyframes slideOutUp {
+          from { opacity: 1; transform: translateY(0); }
+          to   { opacity: 0; transform: translateY(-40px); }
+        }
+        @keyframes slideInUp2 {
+          from { opacity: 0; transform: translateY(40px); }
           to   { opacity: 1; transform: translateY(0); }
         }
-        .splash-line1 { animation: slideUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s both; }
-        .splash-line3 { animation: slideUp2 0.6s cubic-bezier(0.16,1,0.3,1) 0.7s both; }
-        .splash-bar   { animation: slideUp2 0.5s cubic-bezier(0.16,1,0.3,1) 0.9s both; }
+        .splash-static {
+          animation: slideInUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.3s both;
+        }
+        .splash-sub {
+          animation: slideInUp 0.5s cubic-bezier(0.16,1,0.3,1) 0.8s both;
+        }
+        .splash-bar {
+          animation: slideInUp 0.4s cubic-bezier(0.16,1,0.3,1) 0.7s both;
+        }
+        .word-enter {
+          animation: slideInUp2 0.35s cubic-bezier(0.16,1,0.3,1) both;
+        }
+        .word-exit {
+          animation: slideOutUp 0.3s cubic-bezier(0.4,0,1,1) both;
+        }
       `}</style>
 
-      {/* Line 1 — "Built" + rotating box */}
-      <div className="splash-line1" style={{
+      {/* Main headline row */}
+      <div className="splash-static" style={{
         display: 'flex',
         alignItems: 'center',
         gap: 'clamp(0.5rem, 2vw, 1rem)',
         flexWrap: 'wrap',
         justifyContent: 'center',
       }}>
-        {/* Static "Built" */}
+        {/* Static "Build" */}
         <span style={{
           fontFamily: 'var(--font-heading, sans-serif)',
           fontSize: 'clamp(2.5rem, 9vw, 6.5rem)',
@@ -58,35 +93,26 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
           lineHeight: 1,
           color: '#fff',
         }}>
-          Built
+          Build
         </span>
 
-        {/* Rotating box — "Different." / "Complete." */}
+        {/* Animated word box */}
         <span style={{
           display: 'inline-flex',
           alignItems: 'center',
+          justifyContent: 'center',
           overflow: 'hidden',
-          borderRadius: '12px',
-          background: 'linear-gradient(135deg, rgba(255,140,0,0.25), rgba(0,212,255,0.18))',
-          border: '2px solid rgba(255,140,0,0.6)',
+          borderRadius: '14px',
+          background: 'rgba(255,140,0,0.12)',
+          border: '2px solid rgba(255,140,0,0.55)',
           padding: '0.05em 0.35em',
-          boxShadow: '0 0 40px rgba(255,140,0,0.3), inset 0 0 20px rgba(0,212,255,0.08)',
+          minWidth: 'clamp(220px, 45vw, 480px)',
+          minHeight: 'clamp(60px, 12vw, 110px)',
+          boxShadow: '0 0 40px rgba(255,140,0,0.25)',
         }}>
-          <RotatingText
-            texts={['Different.', 'Complete.']}
-            mainClassName=""
-            splitLevelClassName="overflow-hidden"
-            elementLevelClassName=""
-            staggerFrom="last"
-            initial={{ y: '110%' }}
-            animate={{ y: 0 }}
-            exit={{ y: '-110%' }}
-            staggerDuration={0.03}
-            transition={{ type: 'spring', damping: 30, stiffness: 400 }}
-            rotationInterval={1400}
-            splitBy="characters"
-            auto
-            loop
+          <span
+            key={word}
+            className={wordPhase === 'exit' ? 'word-exit' : 'word-enter'}
             style={{
               fontFamily: 'var(--font-heading, sans-serif)',
               fontSize: 'clamp(2.5rem, 9vw, 6.5rem)',
@@ -94,8 +120,11 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
               letterSpacing: '-0.04em',
               lineHeight: 1,
               color: '#FF8C00',
+              display: 'inline-block',
             }}
-          />
+          >
+            {word === 'different' ? 'Different.' : 'Complete.'}
+          </span>
         </span>
       </div>
 
@@ -108,8 +137,8 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
         margin: '0.1rem 0',
       }} />
 
-      {/* Line 2 */}
-      <div className="splash-line3" style={{
+      {/* Tagline */}
+      <div className="splash-sub" style={{
         fontFamily: 'var(--font-body, sans-serif)',
         fontSize: 'clamp(0.8rem, 2.2vw, 1.1rem)',
         fontWeight: 500,
