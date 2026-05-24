@@ -1,43 +1,28 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LayeredText } from './ui/layered-text';
 
 interface ContactProps {
     onOpenModal?: () => void;
 }
 
+const words = ['READY', 'GROW', 'FLARE', 'SUCCESS', 'FUTURE'];
+const colors = ['#7DD3FC', '#FF8C00', '#00D4FF', '#A855F7', '#10B981'];
+
 const Contact: React.FC<ContactProps> = ({ onOpenModal }) => {
     const navigate = useNavigate();
-    const visualRef = useRef<HTMLDivElement>(null);
     const sectionRef = useRef<HTMLDivElement>(null);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [animating, setAnimating] = useState(false);
 
     useEffect(() => {
-        const handleMouseMove = (e: MouseEvent) => {
-            if (!visualRef.current) return;
-            const { clientX, clientY } = e;
-            const { left, top, width, height } = visualRef.current.getBoundingClientRect();
-            const x = (clientX - left) / width - 0.5;
-            const y = (clientY - top) / height - 0.5;
-            visualRef.current.style.transform = `perspective(1000px) rotateY(${x * 15}deg) rotateX(${-y * 15}deg) scale(1.05)`;
-        };
-
-        const handleMouseLeave = () => {
-            if (!visualRef.current) return;
-            visualRef.current.style.transform = `perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1)`;
-        };
-
-        const currentVisual = visualRef.current;
-        if (currentVisual) {
-            window.addEventListener('mousemove', handleMouseMove);
-            currentVisual.addEventListener('mouseleave', handleMouseLeave);
-        }
-
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-            if (currentVisual) {
-                currentVisual.removeEventListener('mouseleave', handleMouseLeave);
-            }
-        };
+        const interval = setInterval(() => {
+            setAnimating(true);
+            setTimeout(() => {
+                setCurrentIndex(i => (i + 1) % words.length);
+                setAnimating(false);
+            }, 300);
+        }, 1800);
+        return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
@@ -49,7 +34,6 @@ const Contact: React.FC<ContactProps> = ({ onOpenModal }) => {
                 }
             });
         }, { threshold: 0.1 });
-
         if (sectionRef.current) {
             sectionRef.current.querySelectorAll('.scroll-anim').forEach(el => observer.observe(el));
         }
@@ -57,97 +41,99 @@ const Contact: React.FC<ContactProps> = ({ onOpenModal }) => {
     }, []);
 
     const handleAction = () => {
-        if (onOpenModal) {
-            onOpenModal();
-        } else {
-            navigate('/contact');
-        }
+        if (onOpenModal) onOpenModal();
+        else navigate('/contact');
     };
 
     return (
         <section id="contact" className="cta-section section-padding" ref={sectionRef}>
+            <style>{`
+                .slot-word {
+                    display: inline-block;
+                    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1), opacity 0.28s ease;
+                }
+                .slot-word.exit {
+                    transform: translateY(-60px) rotateX(45deg);
+                    opacity: 0;
+                }
+                .slot-word.enter {
+                    transform: translateY(0) rotateX(0deg);
+                    opacity: 1;
+                }
+                .slot-machine-box {
+                    perspective: 600px;
+                    overflow: hidden;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 16px;
+                    padding: 0.1em 0.3em;
+                    border: 2px solid rgba(255,255,255,0.1);
+                    background: rgba(255,255,255,0.04);
+                    backdrop-filter: blur(8px);
+                    min-width: 320px;
+                    height: 1.15em;
+                }
+                @media (max-width: 640px) {
+                    .slot-machine-box { min-width: 200px; }
+                }
+            `}</style>
             <div className="container scroll-anim scale-up">
-                <div className="cta-container dual-layout">
-                        <div className="flex flex-col items-center md:items-start w-full text-center md:text-left">
-                            <LayeredText 
-                                lines={[
-                                    { top: "\u00A0", bottom: "READY" },
-                                    { top: "READY", bottom: "GROW" },
-                                    { top: "GROW", bottom: "FLARE" },
-                                    { top: "FLARE", bottom: "SUCCESS" },
-                                    { top: "SUCCESS", bottom: "FUTURE" },
-                                    { top: "FUTURE", bottom: "\u00A0" },
-                                ]}
-                                fontSize="60px"
-                                fontSizeMd="35px"
-                                className="py-0 my-0 text-left text-[#7DD3FC]"
-                            />
-                            <button onClick={handleAction} className="btn btn-primary btn-large" style={{ marginTop: '2rem' }}>Book a Free Call</button>
-                        </div>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    gap: '1.5rem',
+                    padding: '2rem 0',
+                }}>
+                    {/* Static label */}
+                    <p style={{
+                        fontFamily: 'var(--font-body)',
+                        fontSize: '0.875rem',
+                        fontWeight: 700,
+                        color: 'rgba(255,255,255,0.4)',
+                        letterSpacing: '0.15em',
+                        textTransform: 'uppercase',
+                        margin: 0,
+                    }}>
+                        Ready to
+                    </p>
 
-                    <div className="cta-visual interactive-neural-hub hidden md:flex" ref={visualRef} style={{ transition: 'transform 0.1s ease-out', transformStyle: 'preserve-3d' }}>
-                        <div className="cta-glow-bg pulsar-glow"></div>
-                        <svg className="cta-ai-network" viewBox="0 0 500 400" preserveAspectRatio="xMidYMid meet">
-                            <defs>
-                                <filter id="nebulaGlow" x="-50%" y="-50%" width="200%" height="200%">
-                                    <feGaussianBlur stdDeviation="5" result="blur" />
-                                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                                </filter>
-                                <linearGradient id="beamGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" stopColor="transparent" />
-                                    <stop offset="50%" stopColor="#00D4FF" />
-                                    <stop offset="100%" stopColor="transparent" />
-                                </linearGradient>
-                            </defs>
-                            
-                            {/* Neural Threads (Background) */}
-                            <g className="neural-threads" opacity="0.15">
-                                <path d="M 50,50 Q 250,200 450,350" fill="none" stroke="#5A5AFF" strokeWidth="1" strokeDasharray="5,5" />
-                                <path d="M 450,50 Q 250,200 50,350" fill="none" stroke="#8A2BE2" strokeWidth="1" strokeDasharray="5,5" />
-                                <circle cx="250" cy="200" r="150" fill="none" stroke="#ff4d00" strokeWidth="0.5" strokeDasharray="10,10" />
-                            </g>
-
-                            {/* Energy Rings (Emitting from core) */}
-                            <g className="energy-rings">
-                                <circle className="ring r-1" cx="250" cy="200" r="40" fill="none" stroke="#00D4FF" strokeWidth="1" />
-                                <circle className="ring r-2" cx="250" cy="200" r="40" fill="none" stroke="#5A5AFF" strokeWidth="1" />
-                                <circle className="ring r-3" cx="250" cy="200" r="40" fill="none" stroke="#8A2BE2" strokeWidth="1" />
-                            </g>
-
-                            {/* Shooting Stars (Data Packets) */}
-                            <g className="data-beams">
-                                <path className="beam b-1" d="M 100,200 Q 250,50 400,200" fill="none" stroke="url(#beamGradient)" strokeWidth="3" strokeDasharray="20,180" />
-                                <path className="beam b-2" d="M 400,200 Q 250,350 100,200" fill="none" stroke="url(#beamGradient)" strokeWidth="3" strokeDasharray="20,180" />
-                            </g>
-
-                            {/* Planetary Nodes */}
-                            <g className="planetary-nodes">
-                                <g className="p-node pn-1">
-                                    <circle className="node-glow" cx="100" cy="200" r="12" fill="#00D4FF" filter="url(#nebulaGlow)" opacity="0.4" />
-                                    <circle className="node-core" cx="100" cy="200" r="6" fill="#00D4FF" />
-                                </g>
-                                <g className="p-node pn-2">
-                                    <circle className="node-glow" cx="250" cy="50" r="14" fill="#FF8C00" filter="url(#nebulaGlow)" opacity="0.4" />
-                                    <circle className="node-core" cx="250" cy="50" r="7" fill="#FF8C00" />
-                                </g>
-                                <g className="p-node pn-3">
-                                    <circle className="node-glow" cx="400" cy="200" r="12" fill="#8A2BE2" filter="url(#nebulaGlow)" opacity="0.4" />
-                                    <circle className="node-core" cx="400" cy="200" r="6" fill="#8A2BE2" />
-                                </g>
-                                <g className="p-node pn-4">
-                                    <circle className="node-glow" cx="250" cy="350" r="14" fill="#00D4FF" filter="url(#nebulaGlow)" opacity="0.4" />
-                                    <circle className="node-core" cx="250" cy="350" r="7" fill="#00D4FF" />
-                                </g>
-                                
-                                {/* The Sun (Central Core) */}
-                                <g className="central-sun">
-                                    <circle className="sun-glow" cx="250" cy="200" r="30" fill="#ff4d00" filter="url(#nebulaGlow)" opacity="0.3" />
-                                    <circle className="sun-inner" cx="250" cy="200" r="15" fill="#ff4d00" />
-                                    <circle className="sun-white" cx="250" cy="200" r="8" fill="#fff" />
-                                </g>
-                            </g>
-                        </svg>
+                    {/* Slot machine word */}
+                    <div className="slot-machine-box" style={{ borderColor: `${colors[currentIndex]}30` }}>
+                        <span
+                            className={`slot-word ${animating ? 'exit' : 'enter'}`}
+                            style={{
+                                fontFamily: 'var(--font-heading)',
+                                fontSize: 'clamp(2.5rem, 8vw, 5rem)',
+                                fontWeight: 900,
+                                letterSpacing: '-0.03em',
+                                lineHeight: 1,
+                                color: colors[currentIndex],
+                                textShadow: `0 0 40px ${colors[currentIndex]}60`,
+                            }}
+                        >
+                            {words[currentIndex]}
+                        </span>
                     </div>
+
+                    {/* Dots indicator */}
+                    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                        {words.map((_, i) => (
+                            <div key={i} style={{
+                                width: i === currentIndex ? '20px' : '6px',
+                                height: '6px',
+                                borderRadius: '99px',
+                                background: i === currentIndex ? colors[currentIndex] : 'rgba(255,255,255,0.15)',
+                                transition: 'all 0.3s ease',
+                            }} />
+                        ))}
+                    </div>
+
+                    <button onClick={handleAction} className="btn btn-primary btn-large">
+                        Book a Free Call
+                    </button>
                 </div>
             </div>
         </section>

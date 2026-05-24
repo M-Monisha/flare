@@ -66,10 +66,12 @@ export function SplineHero() {
           position: relative;
           display: inline-flex; align-items: center; gap: 0.625rem;
           padding: 0.75rem 1.75rem;
-          background: #111827; color: #fff;
+          background: linear-gradient(135deg, #FF8C00, #FFB800);
+          color: #000;
           font-weight: 700; font-size: 0.9375rem;
           border-radius: 12px; border: none; cursor: pointer;
-          transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+          box-shadow: 0 0 18px rgba(255,140,0,0.4), 0 4px 12px rgba(0,0,0,0.3);
           letter-spacing: 0.02em;
           z-index: 0;
           overflow: visible;
@@ -77,16 +79,24 @@ export function SplineHero() {
         .hero-btn::before {
           content: '';
           position: absolute;
-          inset: -2px;
+          inset: -3px;
           border-radius: 14px;
-          background: linear-gradient(135deg, #6366f1, #ec4899, #facc15);
-          opacity: 0.65;
+          background: linear-gradient(135deg, #FF8C00, #FFD700, #FF8C00);
+          opacity: 0.55;
           filter: blur(10px);
           z-index: -1;
           transition: opacity 0.2s ease, filter 0.2s ease;
         }
-        .hero-btn:hover::before { opacity: 1; filter: blur(14px); }
-        .hero-btn:hover { background: #1f2937; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+        .hero-btn::after {
+          content: '';
+          position: absolute;
+          top: 0; left: 0; right: 0; height: 50%;
+          border-radius: 12px 12px 0 0;
+          background: linear-gradient(to bottom, rgba(255,255,255,0.22), transparent);
+          pointer-events: none; z-index: 1;
+        }
+        .hero-btn:hover::before { opacity: 0.9; filter: blur(14px); }
+        .hero-btn:hover { transform: translateY(-2px); box-shadow: 0 0 28px rgba(255,140,0,0.6), 0 6px 20px rgba(0,0,0,0.35); }
         .hero-btn:active { transform: translateY(0); }
         @keyframes gradientShift {
           0% { background-position: 0% 50%; }
