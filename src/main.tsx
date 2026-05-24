@@ -4,6 +4,7 @@ import './index.css'
 
 // UI Components
 import ConsultationModal from "@/components/ui/consultation-modal"
+import SplashScreen from "@/components/SplashScreen"
 
 // Brand Components
 import Navbar from "@/components/Navbar"
@@ -24,44 +25,41 @@ import Careers from "@/pages/Careers";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   return null;
 }
 
 function App() {
   const [isConsultationModalOpen, setConsultationModalOpen] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
 
   const openModal = () => setConsultationModalOpen(true);
   const closeModal = () => setConsultationModalOpen(false);
 
   return (
-    <Router>
-      <ScrollToTop />
-      <Navbar openModal={openModal} />
-
-      <Routes>
-        <Route path="/" element={<Home openModal={openModal} />} />
-        <Route path="/services" element={<Services openModal={openModal} />} />
-        <Route path="/services/all" element={<AllServices />} />
-        <Route path="/services/:slug" element={<ServiceDetail openModal={openModal} />} />
-        <Route path="/methodology" element={<Methodology openModal={openModal} />} />
-        <Route path="/results" element={<Results openModal={openModal} />} />
-        <Route path="/careers" element={<Careers />} />
-        <Route path="/about" element={<About openModal={openModal} />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
-
-      <Footer openModal={openModal} />
-      <WhatsAppButton />
-      <ConsultationModal
-        isOpen={isConsultationModalOpen}
-        onClose={closeModal}
-      />
-    </Router>
+    <>
+      {showSplash && <SplashScreen onDone={() => setShowSplash(false)} />}
+      <div style={{ opacity: showSplash ? 0 : 1, transition: 'opacity 0.4s ease' }}>
+        <Router>
+          <ScrollToTop />
+          <Navbar openModal={openModal} />
+          <Routes>
+            <Route path="/" element={<Home openModal={openModal} />} />
+            <Route path="/services" element={<Services openModal={openModal} />} />
+            <Route path="/services/all" element={<AllServices />} />
+            <Route path="/services/:slug" element={<ServiceDetail openModal={openModal} />} />
+            <Route path="/methodology" element={<Methodology openModal={openModal} />} />
+            <Route path="/results" element={<Results openModal={openModal} />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/about" element={<About openModal={openModal} />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+          <Footer openModal={openModal} />
+          <WhatsAppButton />
+          <ConsultationModal isOpen={isConsultationModalOpen} onClose={closeModal} />
+        </Router>
+      </div>
+    </>
   );
 }
 
