@@ -23,12 +23,12 @@ const GrowthStack: React.FC = () => {
     return (
         <section id="growth-stack" className="stack-section section-padding" ref={sectionRef}>
             <div className="container">
-        <div className="stack-layout grid grid-cols-1 gap-8 items-center">
+        <div className="stack-layout grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
+                    {/* Left column — existing cards */}
                     <div className="stack-content scroll-anim slide-right">
                         <h2 className="section-badge">How It Works Together</h2>
                         <h3 className="section-title" style={{ color: '#00D4FF', textShadow: '0 0 20px rgba(0, 212, 255, 0.3)' }}>One Team. Every Layer. Better Results.</h3>
                         
-                        {/* Interactive Cards Container */}
                         <div className="stack-cards flex flex-col gap-6 mt-10">
                             <BorderGlow 
                                 glowColor="190 100 50" 
@@ -80,6 +80,68 @@ const GrowthStack: React.FC = () => {
                                     </div>
                                     <p className="text-sm text-gray-300 leading-relaxed">
                                         We analyze performance and provide clear reporting. Every decision you make will be backed by reliable data instead of guesswork.
+                                    </p>
+                                </div>
+                            </BorderGlow>
+                        </div>
+                    </div>
+
+                    {/* Right column — new cards */}
+                    <div className="stack-content scroll-anim slide-left">
+                        <h2 className="section-badge">What We Build</h2>
+                        <h3 className="section-title" style={{ color: '#FF8C00', textShadow: '0 0 20px rgba(255, 140, 0, 0.3)' }}>Technology That Works For You.</h3>
+
+                        <div className="stack-cards flex flex-col gap-6 mt-10">
+                            <BorderGlow
+                                glowColor="30 100 55"
+                                colors={['#FF8C00', '#FFB800', '#fde68a']}
+                                borderRadius={16}
+                                fillOpacity={0.15}
+                                className="w-full bg-white/5 backdrop-blur-sm"
+                            >
+                                <div className="p-5">
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <div className="w-2.5 h-2.5 rounded-full bg-[#FF8C00] shadow-[0_0_10px_#FF8C00]" />
+                                        <h4 className="text-lg font-bold text-white tracking-wide">Design and Development</h4>
+                                    </div>
+                                    <p className="text-sm text-gray-300 leading-relaxed">
+                                        Your digital presence starts with a strong foundation. We build fast, modern websites and apps tailored to your business. Every product is crafted to perform well and leave a lasting impression.
+                                    </p>
+                                </div>
+                            </BorderGlow>
+
+                            <BorderGlow
+                                glowColor="160 80 55"
+                                colors={['#10B981', '#059669', '#6ee7b7']}
+                                borderRadius={16}
+                                fillOpacity={0.15}
+                                className="w-full bg-white/5 backdrop-blur-sm"
+                            >
+                                <div className="p-5">
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <div className="w-2.5 h-2.5 rounded-full bg-[#10B981] shadow-[0_0_10px_#10B981]" />
+                                        <h4 className="text-lg font-bold text-white tracking-wide">AI and Intelligent Systems</h4>
+                                    </div>
+                                    <p className="text-sm text-gray-300 leading-relaxed">
+                                        We bring AI into your business where it matters most. From chatbots to smart decision tools, we build systems that learn and adapt — without the complexity of managing it yourself.
+                                    </p>
+                                </div>
+                            </BorderGlow>
+
+                            <BorderGlow
+                                glowColor="210 90 60"
+                                colors={['#F59E0B', '#D97706', '#fcd34d']}
+                                borderRadius={16}
+                                fillOpacity={0.15}
+                                className="w-full bg-white/5 backdrop-blur-sm"
+                            >
+                                <div className="p-5">
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <div className="w-2.5 h-2.5 rounded-full bg-[#F59E0B] shadow-[0_0_10px_#F59E0B]" />
+                                        <h4 className="text-lg font-bold text-white tracking-wide">Cloud and Scalability</h4>
+                                    </div>
+                                    <p className="text-sm text-gray-300 leading-relaxed">
+                                        We architect cloud infrastructure that grows with your business. Whether you're handling ten users or ten thousand, your systems stay fast and reliable — no downtime, no bottlenecks.
                                     </p>
                                 </div>
                             </BorderGlow>
