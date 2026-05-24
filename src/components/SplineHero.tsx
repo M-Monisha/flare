@@ -1,9 +1,11 @@
 'use client'
 
+import { Suspense, lazy } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
-import Galaxy from '@/components/ui/Galaxy'
+
+const Galaxy = lazy(() => import('@/components/ui/Galaxy'));
 
 export function SplineHero() {
   const navigate = useNavigate();
@@ -22,27 +24,25 @@ export function SplineHero() {
     }}>
 
       {/* Galaxy background */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        zIndex: 0,
-      }}>
-        <Galaxy
-          mouseRepulsion
-          mouseInteraction
-          density={1.2}
-          glowIntensity={0.25}
-          saturation={0}
-          hueShift={140}
-          twinkleIntensity={0.4}
-          rotationSpeed={0.08}
-          repulsionStrength={2}
-          autoCenterRepulsion={0}
-          starSpeed={0.5}
-          speed={0.8}
-          transparent={true}
-          style={{ width: '100%', height: '100%' }}
-        />
+      <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+        <Suspense fallback={<div style={{ width: '100%', height: '100%', background: '#060b17' }} />}>
+          <Galaxy
+            mouseRepulsion
+            mouseInteraction
+            density={1.2}
+            glowIntensity={0.25}
+            saturation={0}
+            hueShift={140}
+            twinkleIntensity={0.4}
+            rotationSpeed={0.08}
+            repulsionStrength={2}
+            autoCenterRepulsion={0}
+            starSpeed={0.5}
+            speed={0.8}
+            transparent={true}
+            style={{ width: '100%', height: '100%' }}
+          />
+        </Suspense>
       </div>
 
       {/* Dark overlay so text stays readable */}
