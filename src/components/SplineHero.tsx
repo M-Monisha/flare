@@ -3,6 +3,7 @@
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
+import Galaxy from '@/components/ui/Galaxy'
 
 export function SplineHero() {
   const navigate = useNavigate();
@@ -20,181 +21,87 @@ export function SplineHero() {
       padding: 'clamp(5rem, 12vw, 7rem) 1.5rem clamp(3rem, 6vw, 4rem)',
     }}>
 
-      {/* ── CSS Blob Background ── */}
+      {/* Galaxy background */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        zIndex: 0,
+      }}>
+        <Galaxy
+          mouseRepulsion
+          mouseInteraction
+          density={1.2}
+          glowIntensity={0.25}
+          saturation={0}
+          hueShift={140}
+          twinkleIntensity={0.4}
+          rotationSpeed={0.08}
+          repulsionStrength={2}
+          autoCenterRepulsion={0}
+          starSpeed={0.5}
+          speed={0.8}
+          transparent={true}
+          style={{ width: '100%', height: '100%' }}
+        />
+      </div>
+
+      {/* Dark overlay so text stays readable */}
+      <div style={{
+        position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none',
+        background: 'rgba(6,11,23,0.55)',
+      }} />
+
+      {/* Blob accents on top of galaxy */}
       <style>{`
         @keyframes blob1 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(40px, -30px) scale(1.08); }
-          66% { transform: translate(-20px, 20px) scale(0.95); }
+          0%, 100% { transform: translate(0,0) scale(1); }
+          50% { transform: translate(30px,-20px) scale(1.06); }
         }
         @keyframes blob2 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(-50px, 30px) scale(1.05); }
-          66% { transform: translate(30px, -20px) scale(0.97); }
+          0%, 100% { transform: translate(0,0) scale(1); }
+          50% { transform: translate(-30px,20px) scale(1.05); }
         }
-        @keyframes blob3 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(20px, 40px) scale(1.06); }
-          66% { transform: translate(-30px, -10px) scale(0.96); }
-        }
-        @keyframes blob4 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(-40px, -30px) scale(1.07); }
-        }
-        .hero-blob {
-          position: absolute;
-          border-radius: 50%;
-          filter: blur(60px);
-          pointer-events: none;
-          will-change: transform;
-        }
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(24px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .hero-tag {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.4rem;
-          padding: 0.35rem 0.9rem;
-          border-radius: 999px;
-          border: 1px solid rgba(0,212,255,0.25);
-          background: rgba(0,212,255,0.06);
-          font-size: 0.75rem;
-          font-weight: 700;
-          color: #00D4FF;
-          letter-spacing: 0.06em;
-          text-transform: uppercase;
-          margin-bottom: 1.5rem;
-        }
-        .hero-tag-dot {
-          width: 6px; height: 6px; border-radius: 50%;
-          background: #00D4FF;
-          animation: pulse 2s ease-in-out infinite;
-        }
-        @keyframes pulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.5; transform: scale(0.8); }
-        }
+        .hero-blob { position:absolute; border-radius:50%; filter:blur(70px); pointer-events:none; will-change:transform; }
         .hero-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.625rem;
+          display: inline-flex; align-items: center; gap: 0.625rem;
           padding: 0.875rem 2rem;
-          background: #FF8C00;
-          color: #000;
-          font-weight: 800;
-          font-size: 0.9375rem;
-          border-radius: 14px;
-          border: none;
-          cursor: pointer;
+          background: #FF8C00; color: #000;
+          font-weight: 800; font-size: 0.9375rem;
+          border-radius: 14px; border: none; cursor: pointer;
           transition: transform 0.2s ease, box-shadow 0.2s ease;
           box-shadow: 0 0 32px rgba(255,140,0,0.35);
           letter-spacing: 0.02em;
         }
-        .hero-btn:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 0 48px rgba(255,140,0,0.5);
-        }
+        .hero-btn:hover { transform: translateY(-2px); box-shadow: 0 0 48px rgba(255,140,0,0.5); }
         .hero-btn:active { transform: translateY(0); }
-        .hero-stats {
-          display: flex;
-          gap: 2rem;
-          margin-top: 3rem;
-          flex-wrap: wrap;
-        }
-        .hero-stat-item {
-          display: flex;
-          flex-direction: column;
-          gap: 0.2rem;
-        }
-        .hero-stat-num {
-          font-size: 1.375rem;
-          font-weight: 800;
-          color: #fff;
-          line-height: 1;
-        }
-        .hero-stat-label {
-          font-size: 0.75rem;
-          color: rgba(255,255,255,0.4);
-          font-weight: 500;
-        }
-        .hero-divider {
-          width: 1px;
-          height: 32px;
-          background: rgba(255,255,255,0.1);
-          align-self: center;
-        }
-        @media (max-width: 640px) {
-          .hero-stats { gap: 1.25rem; }
-          .hero-stat-num { font-size: 1.125rem; }
-          .hero-blob { filter: blur(45px); }
+        @keyframes gradientShift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
         }
       `}</style>
 
-      {/* Blob 1 — orange, top-left */}
-      <div className="hero-blob" style={{
-        width: '600px', height: '600px',
-        background: 'rgba(255,140,0,0.28)',
-        top: '-150px', left: '-180px',
-        animation: 'blob1 12s ease-in-out infinite',
-      }} />
-
-      {/* Blob 2 — cyan, top-right */}
-      <div className="hero-blob" style={{
-        width: '550px', height: '550px',
-        background: 'rgba(0,212,255,0.22)',
-        top: '-100px', right: '-150px',
-        animation: 'blob2 15s ease-in-out infinite',
-      }} />
-
-      {/* Blob 3 — purple, bottom-left */}
+      {/* Subtle orange blob top-left */}
       <div className="hero-blob" style={{
         width: '500px', height: '500px',
-        background: 'rgba(168,85,247,0.22)',
-        bottom: '-100px', left: '5%',
-        animation: 'blob3 18s ease-in-out infinite',
+        background: 'rgba(255,140,0,0.12)',
+        top: '-120px', left: '-150px', zIndex: 1,
+        animation: 'blob1 14s ease-in-out infinite',
       }} />
-
-      {/* Blob 4 — deep blue, bottom-right */}
+      {/* Subtle cyan blob top-right */}
       <div className="hero-blob" style={{
         width: '450px', height: '450px',
-        background: 'rgba(90,90,255,0.18)',
-        bottom: '-80px', right: '0%',
-        animation: 'blob4 14s ease-in-out infinite',
+        background: 'rgba(0,212,255,0.09)',
+        top: '-80px', right: '-120px', zIndex: 1,
+        animation: 'blob2 16s ease-in-out infinite',
       }} />
 
-      {/* Blob 5 — center glow */}
-      <div className="hero-blob" style={{
-        width: '700px', height: '400px',
-        background: 'rgba(255,60,0,0.1)',
-        top: '50%', left: '50%',
-        transform: 'translate(-50%, -50%)',
-        animation: 'blob1 20s ease-in-out infinite',
-      }} />
-
-      {/* Subtle grid overlay */}
-      <div style={{
-        position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 1,
-        backgroundImage: 'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
-        backgroundSize: '60px 60px',
-      }} />
-
-      {/* Dark vignette overlay */}
-      <div style={{
-        position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 2,
-        background: 'radial-gradient(ellipse at center, transparent 30%, rgba(6,11,23,0.55) 100%)',
-      }} />
-
-      {/* ── Content ── */}
+      {/* Content */}
       <div style={{
         position: 'relative', zIndex: 10,
-        maxWidth: '780px',
-        width: '100%',
+        maxWidth: '720px', width: '100%',
         textAlign: 'center',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        display: 'flex', flexDirection: 'column', alignItems: 'center',
       }}>
 
         {/* Headline */}
@@ -203,7 +110,7 @@ export function SplineHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
           style={{
-            fontSize: 'clamp(2.25rem, 7vw, 4.5rem)',
+            fontSize: 'clamp(2rem, 7vw, 4.25rem)',
             fontWeight: 900,
             lineHeight: 1.05,
             letterSpacing: '-0.03em',
@@ -222,13 +129,6 @@ export function SplineHero() {
             business
           </span>
           <br />ecosystem
-          <style>{`
-            @keyframes gradientShift {
-              0% { background-position: 0% 50%; }
-              50% { background-position: 100% 50%; }
-              100% { background-position: 0% 50%; }
-            }
-          `}</style>
         </motion.h1>
 
         {/* Subheadline */}
@@ -237,15 +137,15 @@ export function SplineHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
           style={{
-            fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
+            fontSize: 'clamp(0.9375rem, 2.5vw, 1.125rem)',
             color: 'rgba(255,255,255,0.6)',
             lineHeight: 1.7,
-            maxWidth: '560px',
-            margin: '0 0 2.5rem',
+            maxWidth: '500px',
+            margin: '0 0 2.25rem',
             fontWeight: 400,
           }}
         >
-          AI automation, development, cloud infrastructure, and digital growth systems
+          Everything your business needs to grow, in one place.
         </motion.p>
 
         {/* CTA */}
