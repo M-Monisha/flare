@@ -118,7 +118,8 @@ export function SplineHero() {
             color: '#fff',
           }}
         >
-          AI-powered{' '}
+          AI-powered
+          <br />
           <span style={{
             background: 'linear-gradient(90deg, #FF8C00, #FF3B3B, #FF8C00)',
             WebkitBackgroundClip: 'text',
@@ -126,9 +127,8 @@ export function SplineHero() {
             backgroundSize: '200% 100%',
             animation: 'gradientShift 4s ease infinite',
           }}>
-            business
+            business ecosystem
           </span>
-          <br />ecosystem
         </motion.h1>
 
         {/* Subheadline */}
