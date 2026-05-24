@@ -23,7 +23,7 @@ const GrowthStack: React.FC = () => {
     return (
         <section id="growth-stack" className="stack-section section-padding" ref={sectionRef}>
             <div className="container">
-                <div className="stack-layout grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-20 items-center">
+        <div className="stack-layout grid grid-cols-1 gap-8 items-center">
                     <div className="stack-content scroll-anim slide-right">
                         <h2 className="section-badge">How It Works Together</h2>
                         <h3 className="section-title" style={{ color: '#00D4FF', textShadow: '0 0 20px rgba(0, 212, 255, 0.3)' }}>One Team. Every Layer. Better Results.</h3>
@@ -83,18 +83,6 @@ const GrowthStack: React.FC = () => {
                                     </p>
                                 </div>
                             </BorderGlow>
-                        </div>
-                    </div>
-
-                    <div className="stack-visual scroll-anim slide-left hidden md:block">
-                        <div className="layer layer-3 data-layer">
-                            <span>DATA & INTELLIGENCE</span>
-                        </div>
-                        <div className="layer layer-2 infra-layer">
-                            <span>INFRASTRUCTURE & AUTOMATION</span>
-                        </div>
-                        <div className="layer layer-1 growth-layer">
-                            <span>EXECUTION & GROWTH</span>
                         </div>
                     </div>
                 </div>

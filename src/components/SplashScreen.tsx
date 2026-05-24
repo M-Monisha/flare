@@ -12,11 +12,11 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
     // "Different." enters at 0.5s, holds until 2s, then exits
     const t2 = setTimeout(() => setWordPhase('exit'), 2000);
 
-    // Switch to "Complete." after exit animation (300ms)
+    // Switch to "Complete." after exit animation (450ms)
     const t3 = setTimeout(() => {
       setWord('complete');
       setWordPhase('enter');
-    }, 2350);
+    }, 2500);
 
     // "Complete." holds, then start fading out whole splash at 4s
     const t4 = setTimeout(() => setPhase('out'), 4000);
@@ -56,23 +56,23 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
           to   { opacity: 0; transform: translateY(-40px); }
         }
         @keyframes slideInUp2 {
-          from { opacity: 0; transform: translateY(40px); }
+          from { opacity: 0; transform: translateY(50px); }
           to   { opacity: 1; transform: translateY(0); }
         }
         .splash-static {
-          animation: slideInUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.3s both;
+          animation: slideInUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.3s both;
         }
         .splash-sub {
-          animation: slideInUp 0.5s cubic-bezier(0.16,1,0.3,1) 0.8s both;
+          animation: slideInUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.8s both;
         }
         .splash-bar {
-          animation: slideInUp 0.4s cubic-bezier(0.16,1,0.3,1) 0.7s both;
+          animation: slideInUp 0.5s cubic-bezier(0.16,1,0.3,1) 0.7s both;
         }
         .word-enter {
-          animation: slideInUp2 0.35s cubic-bezier(0.16,1,0.3,1) both;
+          animation: slideInUp2 0.55s cubic-bezier(0.16,1,0.3,1) both;
         }
         .word-exit {
-          animation: slideOutUp 0.3s cubic-bezier(0.4,0,1,1) both;
+          animation: slideOutUp 0.45s cubic-bezier(0.4,0,0.6,1) both;
         }
       `}</style>
 
@@ -123,7 +123,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
               display: 'inline-block',
             }}
           >
-            {word === 'different' ? 'Different.' : 'Complete.'}
+            {word === 'different' ? 'Different' : 'Complete'}
           </span>
         </span>
       </div>
