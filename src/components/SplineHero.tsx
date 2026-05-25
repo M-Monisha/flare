@@ -1,23 +1,11 @@
 'use client'
 
-import { Suspense, lazy, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 
-const Galaxy = lazy(() => import('@/components/ui/Galaxy'));
-
 export function SplineHero() {
   const navigate = useNavigate();
-  // Detect mobile — skip Galaxy on small screens / touch devices
-  const [isMobile, setIsMobile] = useState(true); // default true to avoid flash
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768 || ('ontouchstart' in window));
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
 
   return (
     <div style={{
@@ -32,69 +20,29 @@ export function SplineHero() {
       padding: 'clamp(5rem, 12vw, 7rem) 1.5rem clamp(3rem, 6vw, 4rem)',
     }}>
 
-      {/* Galaxy — desktop only */}
-      {!isMobile && (
-        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-          <Suspense fallback={<div style={{ width: '100%', height: '100%', background: '#060b17' }} />}>
-            <Galaxy
-              mouseRepulsion
-              mouseInteraction
-              density={1.2}
-              glowIntensity={0.25}
-              saturation={0}
-              hueShift={140}
-              twinkleIntensity={0.4}
-              rotationSpeed={0.08}
-              repulsionStrength={2}
-              autoCenterRepulsion={0}
-              starSpeed={0.5}
-              speed={0.8}
-              transparent={true}
-              style={{ width: '100%', height: '100%' }}
-            />
-          </Suspense>
-        </div>
-      )}
-
-      {/* Mobile fallback — CSS gradient background */}
-      {isMobile && (
-        <div style={{
-          position: 'absolute', inset: 0, zIndex: 0,
-          background: 'radial-gradient(ellipse at 20% 20%, rgba(255,140,0,0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, rgba(0,212,255,0.12) 0%, transparent 50%), #060b17',
-        }} />
-      )}
-
-      {/* Dark overlay */}
-      <div style={{
-        position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none',
-        background: 'rgba(6,11,23,0.45)',
-      }} />
-
-      {/* Dot grid overlay — always visible */}
-      <div style={{
-        position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none',
-        backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px)',
-        backgroundSize: '32px 32px',
-        maskImage: 'radial-gradient(ellipse at center, black 30%, transparent 80%)',
-        WebkitMaskImage: 'radial-gradient(ellipse at center, black 30%, transparent 80%)',
-      }} />
-
-      {/* Radial glow lines from center */}
-      <div style={{
-        position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none',
-        background: 'conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(255,140,0,0.03) 30deg, transparent 60deg, rgba(0,212,255,0.03) 120deg, transparent 150deg, rgba(168,85,247,0.03) 210deg, transparent 240deg, rgba(255,140,0,0.03) 300deg, transparent 360deg)',
-      }} />
-
       <style>{`
-        @keyframes blob1 {
-          0%, 100% { transform: translate(0,0) scale(1); }
-          50% { transform: translate(30px,-20px) scale(1.06); }
+        @keyframes meshMove1 {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(60px, -40px) scale(1.08); }
         }
-        @keyframes blob2 {
-          0%, 100% { transform: translate(0,0) scale(1); }
-          50% { transform: translate(-30px,20px) scale(1.05); }
+        @keyframes meshMove2 {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(-50px, 50px) scale(1.06); }
         }
-        .hero-blob { position:absolute; border-radius:50%; filter:blur(70px); pointer-events:none; will-change:transform; }
+        @keyframes meshMove3 {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(40px, 60px) scale(1.05); }
+        }
+        @keyframes meshMove4 {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(-60px, -30px) scale(1.07); }
+        }
+        .mesh-blob {
+          position: absolute;
+          border-radius: 50%;
+          pointer-events: none;
+          will-change: transform;
+        }
         .hero-btn {
           position: relative;
           display: inline-flex; align-items: center; gap: 0.625rem;
@@ -138,24 +86,60 @@ export function SplineHero() {
         }
       `}</style>
 
-      {/* Blobs — always visible on both desktop and mobile */}
-      <div className="hero-blob" style={{
-        width: '600px', height: '600px',
-        background: 'rgba(255,140,0,0.2)',
-        top: '-150px', left: '-180px', zIndex: 1,
-        animation: 'blob1 14s ease-in-out infinite',
+      {/* ── Mesh gradient blobs ── */}
+      {/* Orange — top left */}
+      <div className="mesh-blob" style={{
+        width: '70vw', height: '70vw', maxWidth: '700px', maxHeight: '700px',
+        background: 'radial-gradient(circle, rgba(255,100,0,0.55) 0%, rgba(255,60,0,0.3) 40%, transparent 70%)',
+        top: '-20%', left: '-15%',
+        filter: 'blur(80px)',
+        animation: 'meshMove1 16s ease-in-out infinite',
+        zIndex: 0,
       }} />
-      <div className="hero-blob" style={{
-        width: '500px', height: '500px',
-        background: 'rgba(0,212,255,0.14)',
-        top: '-100px', right: '-140px', zIndex: 1,
-        animation: 'blob2 16s ease-in-out infinite',
+
+      {/* Cyan — top right */}
+      <div className="mesh-blob" style={{
+        width: '60vw', height: '60vw', maxWidth: '600px', maxHeight: '600px',
+        background: 'radial-gradient(circle, rgba(0,180,255,0.4) 0%, rgba(0,100,200,0.2) 50%, transparent 70%)',
+        top: '-10%', right: '-10%',
+        filter: 'blur(90px)',
+        animation: 'meshMove2 20s ease-in-out infinite',
+        zIndex: 0,
       }} />
-      <div className="hero-blob" style={{
-        width: '400px', height: '400px',
-        background: 'rgba(168,85,247,0.12)',
-        bottom: '-80px', left: '20%', zIndex: 1,
-        animation: 'blob1 18s ease-in-out infinite reverse',
+
+      {/* Purple — bottom center */}
+      <div className="mesh-blob" style={{
+        width: '65vw', height: '65vw', maxWidth: '650px', maxHeight: '650px',
+        background: 'radial-gradient(circle, rgba(120,40,200,0.45) 0%, rgba(80,0,160,0.25) 50%, transparent 70%)',
+        bottom: '-20%', left: '20%',
+        filter: 'blur(85px)',
+        animation: 'meshMove3 18s ease-in-out infinite',
+        zIndex: 0,
+      }} />
+
+      {/* Deep blue — bottom right */}
+      <div className="mesh-blob" style={{
+        width: '50vw', height: '50vw', maxWidth: '500px', maxHeight: '500px',
+        background: 'radial-gradient(circle, rgba(0,60,180,0.35) 0%, transparent 70%)',
+        bottom: '-10%', right: '-5%',
+        filter: 'blur(80px)',
+        animation: 'meshMove4 22s ease-in-out infinite',
+        zIndex: 0,
+      }} />
+
+      {/* Dot grid overlay */}
+      <div style={{
+        position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none',
+        backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px)',
+        backgroundSize: '36px 36px',
+        maskImage: 'radial-gradient(ellipse at center, black 20%, transparent 75%)',
+        WebkitMaskImage: 'radial-gradient(ellipse at center, black 20%, transparent 75%)',
+      }} />
+
+      {/* Dark vignette to keep edges dark */}
+      <div style={{
+        position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none',
+        background: 'radial-gradient(ellipse at center, rgba(6,11,23,0.1) 0%, rgba(6,11,23,0.75) 100%)',
       }} />
 
       {/* Content */}
@@ -197,7 +181,7 @@ export function SplineHero() {
           transition={{ duration: 0.7, delay: 0.2 }}
           style={{
             fontSize: 'clamp(0.9375rem, 2.5vw, 1.125rem)',
-            color: 'rgba(255,255,255,0.6)',
+            color: 'rgba(255,255,255,0.65)',
             lineHeight: 1.7,
             maxWidth: '500px',
             margin: '0 0 2.25rem',
