@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
@@ -9,6 +9,15 @@ const Galaxy = lazy(() => import('@/components/ui/Galaxy'));
 
 export function SplineHero() {
   const navigate = useNavigate();
+  // Detect mobile — skip Galaxy on small screens / touch devices
+  const [isMobile, setIsMobile] = useState(true); // default true to avoid flash
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768 || ('ontouchstart' in window));
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   return (
     <div style={{
@@ -23,35 +32,44 @@ export function SplineHero() {
       padding: 'clamp(5rem, 12vw, 7rem) 1.5rem clamp(3rem, 6vw, 4rem)',
     }}>
 
-      {/* Galaxy background */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-        <Suspense fallback={<div style={{ width: '100%', height: '100%', background: '#060b17' }} />}>
-          <Galaxy
-            mouseRepulsion
-            mouseInteraction
-            density={1.2}
-            glowIntensity={0.25}
-            saturation={0}
-            hueShift={140}
-            twinkleIntensity={0.4}
-            rotationSpeed={0.08}
-            repulsionStrength={2}
-            autoCenterRepulsion={0}
-            starSpeed={0.5}
-            speed={0.8}
-            transparent={true}
-            style={{ width: '100%', height: '100%' }}
-          />
-        </Suspense>
-      </div>
+      {/* Galaxy — desktop only */}
+      {!isMobile && (
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <Suspense fallback={<div style={{ width: '100%', height: '100%', background: '#060b17' }} />}>
+            <Galaxy
+              mouseRepulsion
+              mouseInteraction
+              density={1.2}
+              glowIntensity={0.25}
+              saturation={0}
+              hueShift={140}
+              twinkleIntensity={0.4}
+              rotationSpeed={0.08}
+              repulsionStrength={2}
+              autoCenterRepulsion={0}
+              starSpeed={0.5}
+              speed={0.8}
+              transparent={true}
+              style={{ width: '100%', height: '100%' }}
+            />
+          </Suspense>
+        </div>
+      )}
 
-      {/* Dark overlay so text stays readable */}
+      {/* Mobile fallback — CSS gradient background */}
+      {isMobile && (
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 0,
+          background: 'radial-gradient(ellipse at 20% 20%, rgba(255,140,0,0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, rgba(0,212,255,0.12) 0%, transparent 50%), #060b17',
+        }} />
+      )}
+
+      {/* Dark overlay */}
       <div style={{
         position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none',
-        background: 'rgba(6,11,23,0.55)',
+        background: 'rgba(6,11,23,0.45)',
       }} />
 
-      {/* Blob accents on top of galaxy */}
       <style>{`
         @keyframes blob1 {
           0%, 100% { transform: translate(0,0) scale(1); }
@@ -105,14 +123,13 @@ export function SplineHero() {
         }
       `}</style>
 
-      {/* Subtle orange blob top-left */}
+      {/* Blobs — always visible on both desktop and mobile */}
       <div className="hero-blob" style={{
         width: '500px', height: '500px',
         background: 'rgba(255,140,0,0.12)',
         top: '-120px', left: '-150px', zIndex: 1,
         animation: 'blob1 14s ease-in-out infinite',
       }} />
-      {/* Subtle cyan blob top-right */}
       <div className="hero-blob" style={{
         width: '450px', height: '450px',
         background: 'rgba(0,212,255,0.09)',
@@ -127,8 +144,6 @@ export function SplineHero() {
         textAlign: 'center',
         display: 'flex', flexDirection: 'column', alignItems: 'center',
       }}>
-
-        {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -155,7 +170,6 @@ export function SplineHero() {
           </span>
         </motion.h1>
 
-        {/* Subheadline */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -172,7 +186,6 @@ export function SplineHero() {
           Everything your business needs to grow, in one place.
         </motion.p>
 
-        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -183,7 +196,6 @@ export function SplineHero() {
             <ArrowRight style={{ width: '18px', height: '18px' }} />
           </button>
         </motion.div>
-
       </div>
     </div>
   );

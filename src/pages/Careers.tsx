@@ -154,7 +154,7 @@ const PageSpotlight: React.FC<{ containerRef: React.RefObject<HTMLDivElement | n
 };
 
 /* ─── JOB CARD COMPONENT ────────────────────────────────────────── */
-const JobCard: React.FC<{ job: JobRole; onApply: (title: string) => void }> = ({ job, onApply }) => {
+const JobCard: React.FC<{ job: JobRole; onApply: (_title: string) => void }> = ({ job }) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="jd-card" style={{ '--accent': job.color } as React.CSSProperties}
@@ -169,11 +169,6 @@ const JobCard: React.FC<{ job: JobRole; onApply: (title: string) => void }> = ({
           <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.03em' }}>{job.type}</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
-          <button className="btn-apply" onClick={e => { e.stopPropagation(); onApply(job.title); }}
-            style={{ borderColor: `${job.color}60`, color: job.color }}>
-            Apply Now
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-          </button>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
             style={{ transition: 'transform 0.25s ease', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }}>
             <polyline points="6 9 12 15 18 9"/>
@@ -575,6 +570,29 @@ const Careers: React.FC = () => {
             {jobRoles.map((job, i) => (
               <JobCard key={i} job={job} onApply={handleApply} />
             ))}
+          </div>
+
+          {/* Email CTA below cards */}
+          <div className="scroll-anim slide-up" style={{
+            marginTop: '2rem',
+            textAlign: 'center',
+            padding: '1.25rem 1.5rem',
+            borderRadius: '12px',
+            background: 'rgba(255,255,255,0.02)',
+            border: '1px solid rgba(255,255,255,0.07)',
+          }}>
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.9375rem', color: 'rgba(255,255,255,0.6)', margin: 0 }}>
+              Interested? Send your resume to{' '}
+              <a
+                href="mailto:marketing@flaretechnologies.in"
+                style={{ color: '#FF8C00', fontWeight: 700, textDecoration: 'none' }}
+                onMouseEnter={e => (e.currentTarget.style.textDecoration = 'underline')}
+                onMouseLeave={e => (e.currentTarget.style.textDecoration = 'none')}
+              >
+                marketing@flaretechnologies.in
+              </a>
+              {' '}with the role name in the subject line.
+            </p>
           </div>
         </div>
       </section>
