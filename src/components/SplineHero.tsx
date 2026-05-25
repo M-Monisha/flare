@@ -70,6 +70,21 @@ export function SplineHero() {
         background: 'rgba(6,11,23,0.45)',
       }} />
 
+      {/* Dot grid overlay — always visible */}
+      <div style={{
+        position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none',
+        backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px)',
+        backgroundSize: '32px 32px',
+        maskImage: 'radial-gradient(ellipse at center, black 30%, transparent 80%)',
+        WebkitMaskImage: 'radial-gradient(ellipse at center, black 30%, transparent 80%)',
+      }} />
+
+      {/* Radial glow lines from center */}
+      <div style={{
+        position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none',
+        background: 'conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(255,140,0,0.03) 30deg, transparent 60deg, rgba(0,212,255,0.03) 120deg, transparent 150deg, rgba(168,85,247,0.03) 210deg, transparent 240deg, rgba(255,140,0,0.03) 300deg, transparent 360deg)',
+      }} />
+
       <style>{`
         @keyframes blob1 {
           0%, 100% { transform: translate(0,0) scale(1); }
@@ -125,16 +140,22 @@ export function SplineHero() {
 
       {/* Blobs — always visible on both desktop and mobile */}
       <div className="hero-blob" style={{
-        width: '500px', height: '500px',
-        background: 'rgba(255,140,0,0.12)',
-        top: '-120px', left: '-150px', zIndex: 1,
+        width: '600px', height: '600px',
+        background: 'rgba(255,140,0,0.2)',
+        top: '-150px', left: '-180px', zIndex: 1,
         animation: 'blob1 14s ease-in-out infinite',
       }} />
       <div className="hero-blob" style={{
-        width: '450px', height: '450px',
-        background: 'rgba(0,212,255,0.09)',
-        top: '-80px', right: '-120px', zIndex: 1,
+        width: '500px', height: '500px',
+        background: 'rgba(0,212,255,0.14)',
+        top: '-100px', right: '-140px', zIndex: 1,
         animation: 'blob2 16s ease-in-out infinite',
+      }} />
+      <div className="hero-blob" style={{
+        width: '400px', height: '400px',
+        background: 'rgba(168,85,247,0.12)',
+        bottom: '-80px', left: '20%', zIndex: 1,
+        animation: 'blob1 18s ease-in-out infinite reverse',
       }} />
 
       {/* Content */}
