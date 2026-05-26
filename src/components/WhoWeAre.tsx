@@ -123,7 +123,7 @@ const WhoWeAre: React.FC = () => {
             border: '1px solid rgba(255,255,255,0.08)',
           }}>
             <img
-              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80&auto=format&fit=crop"
+              src="/team.jpg"
               alt="Flare Technologies team collaborating"
               style={{
                 width: '100%',
