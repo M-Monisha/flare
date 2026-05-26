@@ -35,7 +35,7 @@ interface JobRole {
 const jobRoles: JobRole[] = [
   {
     title: 'Web Developer Intern',
-    type: 'Internship · Remote · 3–6 Months',
+    type: 'Internship · Remote · 0–3 Months',
     color: '#00D4FF',
     about: 'Build real products for real clients. We\'re looking for someone who understands the web and knows how to use AI tools to ship faster without losing quality.',
     responsibilities: [
@@ -55,7 +55,7 @@ const jobRoles: JobRole[] = [
   },
   {
     title: 'AI Developer Intern',
-    type: 'Internship · Remote · 3–6 Months',
+    type: 'Internship · Remote · 0–3 Months',
     color: '#A855F7',
     about: 'We build AI into everything — automations, chatbots, intelligent workflows. We need someone who can take a real business problem and actually build an AI solution for it. Fast.',
     responsibilities: [
@@ -75,7 +75,7 @@ const jobRoles: JobRole[] = [
   },
   {
     title: 'Graphic Designer Intern',
-    type: 'Internship · Remote · 3–6 Months',
+    type: 'Internship · Remote · 0–3 Months',
     color: '#F59E0B',
     about: 'Design here is not decoration — it\'s communication. We need a designer who thinks strategically, executes beautifully, and uses AI tools to move at the speed the market demands.',
     responsibilities: [
@@ -93,7 +93,7 @@ const jobRoles: JobRole[] = [
   },
   {
     title: 'Social Media Intern',
-    type: 'Internship · Remote · 3–6 Months',
+    type: 'Internship · Remote · 0–3 Months',
     color: '#10B981',
     about: 'We\'re not looking for someone who just posts — we\'re looking for someone who thinks strategically about content. You understand platforms, algorithms, and how to use AI tools to create better content faster.',
     responsibilities: [
