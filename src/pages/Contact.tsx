@@ -34,7 +34,7 @@ export default function Contact() {
                                 </div>
                                 <div>
                                     <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Email Us</p>
-                                    <p className="text-white font-medium text-lg">hello@flaretechnologies.com</p>
+                                    <p className="text-white font-medium text-lg">marketing@flaretechnologies.in</p>
                                 </div>
                             </div>
 

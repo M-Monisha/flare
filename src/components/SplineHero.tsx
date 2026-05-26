@@ -127,13 +127,14 @@ export function SplineHero() {
         zIndex: 0,
       }} />
 
-      {/* Dot grid overlay */}
+      {/* Line grid overlay — like Zerozilla */}
       <div style={{
         position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none',
-        backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px)',
-        backgroundSize: '36px 36px',
-        maskImage: 'radial-gradient(ellipse at center, black 20%, transparent 75%)',
-        WebkitMaskImage: 'radial-gradient(ellipse at center, black 20%, transparent 75%)',
+        backgroundImage: `
+          linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
+        `,
+        backgroundSize: '60px 60px',
       }} />
 
       {/* Dark vignette to keep edges dark */}

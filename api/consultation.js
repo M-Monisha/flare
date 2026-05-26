@@ -24,7 +24,7 @@ export default async function handler(req, res) {
         const nodemailer = require('nodemailer');
         const twilioClient = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
-        const targetEmail = 'consult@flaretechnologies.in';
+        const targetEmail = 'marketing@flaretechnologies.in';
         const targetWhatsApp = process.env.TWILIO_WHATSAPP_NUMBER || 'whatsapp:+14155238886'; // fallback to twilio sandbox if unspecified
         const destinationWhatsApp = 'whatsapp:+917899104311';
 

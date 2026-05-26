@@ -117,11 +117,11 @@ const Footer: React.FC<FooterProps> = ({ openModal }) => {
                                     <span className="text-white font-medium group-hover:text-[#00D4FF] transition-colors">+91 78991 04311</span>
                                 </div>
                             </a>
-                            <a href="mailto:consult@flaretechnologies.in" className="flex items-start gap-3 group cursor-pointer">
+                            <a href="mailto:marketing@flaretechnologies.in" className="flex items-start gap-3 group cursor-pointer">
                                 <Mail className="w-5 h-5 text-[#00D4FF] mt-0.5" />
                                 <div className="flex flex-col">
                                     <span className="text-gray-400 text-xs font-semibold uppercase tracking-wider">Email</span>
-                                    <span className="text-white font-medium group-hover:text-[#00D4FF] transition-colors">consult@flaretechnologies.in</span>
+                                    <span className="text-white font-medium group-hover:text-[#00D4FF] transition-colors">marketing@flaretechnologies.in</span>
                                 </div>
                             </a>
                             <div className="flex items-start gap-3">

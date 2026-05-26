@@ -214,7 +214,7 @@ const Careers: React.FC = () => {
   }, []);
 
   const handleApply = (roleName: string) => {
-    window.location.href = `mailto:consult@flaretechnologies.in?subject=Application - ${encodeURIComponent(roleName)}`;
+    window.location.href = `mailto:marketing@flaretechnologies.in?subject=Application - ${encodeURIComponent(roleName)}`;
   };
 
   const scrollToRoles = () => {
@@ -617,7 +617,7 @@ const Careers: React.FC = () => {
               </p>
             </div>
             <a
-              href="mailto:consult@flaretechnologies.in?subject=Open Application"
+              href="mailto:marketing@flaretechnologies.in?subject=Open Application"
               className="btn btn-primary"
               style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: '0.4rem', textDecoration: 'none', whiteSpace: 'nowrap' }}
             >
