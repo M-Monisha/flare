@@ -5,6 +5,8 @@ import { GlobePulse } from "@/components/ui/cobe-globe-pulse";
 
 export default function Contact() {
     const [formState, setFormState] = useState<'idle' | 'sending' | 'success'>('idle');
+    const [goal, setGoal] = useState('Save Time/Automation');
+    const [otherGoal, setOtherGoal] = useState('');
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -113,7 +115,7 @@ export default function Contact() {
                                             <input 
                                                 required
                                                 className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-[#00D4FF]/50 transition-all"
-                                                placeholder="John Doe"
+                                                placeholder="Your full name"
                                             />
                                         </div>
                                         <div className="space-y-2">
@@ -122,7 +124,7 @@ export default function Contact() {
                                                 required
                                                 type="email"
                                                 className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-[#00D4FF]/50 transition-all"
-                                                placeholder="john@example.com"
+                                                placeholder="Your email address"
                                             />
                                         </div>
                                     </div>
@@ -137,12 +139,25 @@ export default function Contact() {
 
                                     <div className="space-y-2">
                                         <label className="text-xs font-bold text-gray-500 uppercase tracking-widest ml-1">Your Primary Goal</label>
-                                        <select className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-[#00D4FF]/50 transition-all appearance-none cursor-pointer">
+                                        <select
+                                            value={goal}
+                                            onChange={e => setGoal(e.target.value)}
+                                            className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-[#00D4FF]/50 transition-all appearance-none cursor-pointer"
+                                        >
                                             <option className="bg-[#05070a]">Save Time/Automation</option>
                                             <option className="bg-[#05070a]">Build New Website</option>
                                             <option className="bg-[#05070a]">Connect Different Tools</option>
                                             <option className="bg-[#05070a]">Custom Software Solution</option>
+                                            <option className="bg-[#05070a]">Other</option>
                                         </select>
+                                        {goal === 'Other' && (
+                                            <input
+                                                value={otherGoal}
+                                                onChange={e => setOtherGoal(e.target.value)}
+                                                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-[#00D4FF]/50 transition-all mt-3"
+                                                placeholder="Please describe your goal"
+                                            />
+                                        )}
                                     </div>
 
                                     <div className="space-y-2">

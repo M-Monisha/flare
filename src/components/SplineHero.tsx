@@ -155,16 +155,15 @@ export function SplineHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
           style={{
-            fontSize: 'clamp(2rem, 7vw, 4.25rem)',
+            fontSize: 'clamp(1.75rem, 6vw, 3.75rem)',
             fontWeight: 900,
-            lineHeight: 1.05,
+            lineHeight: 1.1,
             letterSpacing: '-0.03em',
             margin: '0 0 1.25rem',
             color: '#fff',
           }}
         >
-          AI-powered
-          <br />
+          India's First{' '}
           <span style={{
             background: 'linear-gradient(90deg, #FF8C00, #FF3B3B, #FF8C00)',
             WebkitBackgroundClip: 'text',
@@ -172,8 +171,9 @@ export function SplineHero() {
             backgroundSize: '200% 100%',
             animation: 'gradientShift 4s ease infinite',
           }}>
-            business ecosystem
+            B2B Technical
           </span>
+          <br />Marketing Company
         </motion.h1>
 
         <motion.p
